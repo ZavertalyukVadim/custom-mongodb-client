@@ -21,7 +21,8 @@ public class ClientMongoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... strings) throws Exception {
-		entityService.getAllEntity().forEach(System.out::print);
+//		entityService.getAllEntity().forEach(System.out::print);
+		System.out.println(entityService.getAllEntity());
 		System.out.println("HW!!!");
 	}
 }

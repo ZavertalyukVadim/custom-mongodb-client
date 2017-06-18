@@ -17,6 +17,16 @@ public class EntityService {
     }
 
     public List<Entity> getAllEntity() {
+        if (entityDao.findAll().isEmpty()){
+            test();
+        }
         return entityDao.findAll();
+    }
+
+    private void test() {
+        Entity entity= new Entity();
+        entity.setName("lol");
+        entity.setAge(10);
+        entityDao.save(entity);
     }
 }
