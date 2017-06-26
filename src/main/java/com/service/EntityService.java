@@ -1,6 +1,7 @@
 package com.service;
 
 import com.dao.EntityDao;
+import com.dao.EntityTestDao;
 import com.entity.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,17 +11,19 @@ import java.util.List;
 @Service
 public class EntityService {
     private final EntityDao entityDao;
+    private final EntityTestDao entityTestDao;
 
     @Autowired
-    public EntityService(EntityDao entityDao) {
+    public EntityService(EntityDao entityDao, EntityTestDao entityTestDao) {
         this.entityDao = entityDao;
+        this.entityTestDao = entityTestDao;
     }
 
     public List<Entity> getAllEntity() {
         if (entityDao.findAll().isEmpty()) {
             test();
         }
-        return entityDao.findAll();
+        return entityTestDao.getWithAsc("lol",1,3,"name");
     }
 
     private void test() {
