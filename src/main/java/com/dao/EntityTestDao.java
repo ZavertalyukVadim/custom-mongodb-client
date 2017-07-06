@@ -14,8 +14,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static org.springframework.data.mongodb.core.aggregation.Aggregation.newAggregation;
-
 @Repository
 public class EntityTestDao {
     private final MongoOperations mongoOperations;
@@ -25,28 +23,30 @@ public class EntityTestDao {
         this.mongoOperations = mongoOperations;
     }
 
-    public List<Entity> getWithAsc(String name,Integer skip,Integer limit,String sortBy){
-        return mongoOperations.find(Query.query(Criteria.where("name").is(name)).with(new Sort(Sort.Direction.ASC, ""+sortBy)).skip(skip).limit(limit), Entity.class);
+    public List<Entity> getWithAsc(String name, Integer skip, Integer limit, String sortBy) {
+        return mongoOperations.find(Query.query(Criteria.where("name").is(name)).with(new Sort(Sort.Direction.ASC, "" + sortBy)).skip(skip).limit(limit), Entity.class);
     }
-    public List<Entity> getWithDesc(String name,Integer skip,Integer limit,String sortBy){
+
+    public List<Entity> getWithDesc(String name, Integer skip, Integer limit, String sortBy) {
 
         AggregationOperation match = Aggregation.match(Criteria.where("name").is(name));
-        AggregationOperation sort = Aggregation.sort(Sort.Direction.DESC, ""+sortBy);
+        AggregationOperation group = Aggregation.group("name","age");
+        AggregationOperation sort = Aggregation.sort(Sort.Direction.DESC, "" + sortBy);
         AggregationOperation lim = Aggregation.limit(limit);
         AggregationOperation sk = Aggregation.skip(skip);
-
-        Aggregation agg = newAggregation(
+        Aggregation agg = Aggregation.newAggregation(
                 match,
+                group,
                 sort,
                 lim,
                 sk
         );
 
-        AggregationResults<EntityDto> results = mongoOperations.aggregate(agg,Entity.class, EntityDto.class);
+        AggregationResults<EntityDto> results = mongoOperations.aggregate(agg, Entity.class, EntityDto.class);
         List<EntityDto> mappedResult = results.getMappedResults();
 
         System.out.println(mappedResult);
 
-        return mongoOperations.find(Query.query(Criteria.where("name").is(name)).with(new Sort(Sort.Direction.DESC, ""+sortBy)).skip(skip).limit(limit), Entity.class);
+        return mongoOperations.find(Query.query(Criteria.where("name").is(name)).with(new Sort(Sort.Direction.DESC, "" + sortBy)).skip(skip).limit(limit), Entity.class);
     }
 }
