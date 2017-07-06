@@ -23,7 +23,7 @@ public class EntityService {
         if (entityDao.findAll().isEmpty()) {
             test();
         }
-        return entityTestDao.getWithAsc("lol",1,3,"name");
+        return entityTestDao.getWithDesc("lol",1,3,"name");
     }
 
     private void test() {
