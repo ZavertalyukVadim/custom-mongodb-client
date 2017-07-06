@@ -2,10 +2,7 @@ package com.service;
 
 import com.dao.EntityDao;
 import com.dao.EntityTestDao;
-import com.dto.ConditionDto;
-import com.dto.EntityDto;
-import com.dto.GroupByDto;
-import com.dto.SortDto;
+import com.dto.*;
 import com.entity.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -24,25 +21,23 @@ public class EntityService {
         this.entityTestDao = entityTestDao;
     }
 
-    public List<EntityDto> getAllEntity() {
+    public void getAllEntity(String query) {
         if (entityDao.findAll().isEmpty()) {
             test();
         }
-        String select = "*";//
-        String condition = "";
-        String groupBy = "";
-        String orderBy = "";
-        Integer skip = 0;
-        Integer limit = 0;
-        return entityTestDao.find(getInformationCondition(condition), getInformationForGroupBy(groupBy), getInformationForOrder(orderBy), getInformationForSkip(), getInformationForLimit());
+        QueryDto queryDto =  new QueryDto(query);
+        queryDto.setLimit(3);
+        queryDto.setSkip(1);
+        List<EntityDto> list= entityTestDao.find(getInformationCondition(queryDto.getCondition()), getInformationForGroupBy(queryDto.getGroupBy()), getInformationForOrder(queryDto.getOrderBy()), getInformationForSkip(queryDto.getSkip()), getInformationForLimit(queryDto.getLimit()));
+        System.out.println(list);
     }
 
-    private Integer getInformationForSkip() {
-        return 1;
+    private Integer getInformationForSkip(Integer skip) {
+        return skip;
     }
 
-    private Integer getInformationForLimit() {
-        return 3;
+    private Integer getInformationForLimit(Integer limit) {
+        return limit;
     }
 
     private GroupByDto getInformationForGroupBy(String groupBy) {

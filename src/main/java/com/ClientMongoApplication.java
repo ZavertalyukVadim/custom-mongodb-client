@@ -32,15 +32,15 @@ public class ClientMongoApplication implements CommandLineRunner {
     private void menu(String[] strings) throws IOException {
         System.out.println(Arrays.toString(strings));
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-        String s;
+        String query;
         while (true) {
             System.out.print("write = ");
-            s = bufferedReader.readLine();
-            switch (s) {
+            query = bufferedReader.readLine();
+            switch (query) {
                 case "stop":
                     return;
                 case "view":
-                    System.out.println(entityService.getAllEntity());
+                    entityService.getAllEntity(query);
                     break;
                 default:
                     System.out.println("write correct keyword");
