@@ -2,8 +2,12 @@ package com.service;
 
 import com.dao.EntityDao;
 import com.dao.EntityTestDao;
+import com.dto.ConditionDto;
+import com.dto.EntityDto;
+import com.dto.SortDto;
 import com.entity.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,11 +23,30 @@ public class EntityService {
         this.entityTestDao = entityTestDao;
     }
 
-    public List<Entity> getAllEntity() {
+    public List<EntityDto> getAllEntity() {
         if (entityDao.findAll().isEmpty()) {
             test();
         }
-        return entityTestDao.getWithDesc("lol",1,3,"name");
+        String select = "*";//
+        String condition="";
+        String groupBy = "`age` and `name`";
+        String orderBy = "name";
+        Integer skip =1 ;
+        Integer limit=3;
+        return entityTestDao.find(getCondition(condition),groupBy, getInformationForOrder(orderBy),skip,limit);
+    }
+    private SortDto  getInformationForOrder(String orderBy){
+        SortDto sortDto =  new SortDto();
+        sortDto.setOrderByType(Sort.Direction.DESC);
+        sortDto.setOrderByFields("age");
+        return sortDto;
+    }
+    private ConditionDto getCondition(String condition){
+        ConditionDto conditionDto = new ConditionDto();
+        conditionDto.setField("name");
+        conditionDto.setOperator("=");
+        conditionDto.setValue("lol");
+        return conditionDto;
     }
 
     private void test() {

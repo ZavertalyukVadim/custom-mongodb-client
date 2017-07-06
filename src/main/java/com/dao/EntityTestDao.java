@@ -1,6 +1,8 @@
 package com.dao;
 
+import com.dto.ConditionDto;
 import com.dto.EntityDto;
+import com.dto.SortDto;
 import com.entity.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -23,15 +25,10 @@ public class EntityTestDao {
         this.mongoOperations = mongoOperations;
     }
 
-    public List<Entity> getWithAsc(String name, Integer skip, Integer limit, String sortBy) {
-        return mongoOperations.find(Query.query(Criteria.where("name").is(name)).with(new Sort(Sort.Direction.ASC, "" + sortBy)).skip(skip).limit(limit), Entity.class);
-    }
-
-    public List<Entity> getWithDesc(String name, Integer skip, Integer limit, String sortBy) {
-
+    public List<Entity> find(String name, Integer skip, Integer limit, String sortBy) {
         AggregationOperation match = Aggregation.match(Criteria.where("name").is(name));
-        AggregationOperation group = Aggregation.group("name","age");
-        AggregationOperation sort = Aggregation.sort(Sort.Direction.DESC, "" + sortBy);
+        AggregationOperation group = Aggregation.group("age","name");
+        AggregationOperation sort = Aggregation.sort(Sort.Direction.DESC, sortBy);
         AggregationOperation lim = Aggregation.limit(limit);
         AggregationOperation sk = Aggregation.skip(skip);
         Aggregation agg = Aggregation.newAggregation(
@@ -48,5 +45,23 @@ public class EntityTestDao {
         System.out.println(mappedResult);
 
         return mongoOperations.find(Query.query(Criteria.where("name").is(name)).with(new Sort(Sort.Direction.DESC, "" + sortBy)).skip(skip).limit(limit), Entity.class);
+    }
+
+    public List<EntityDto> find(ConditionDto conditionDto, String groupBy, SortDto sortDto, Integer skip, Integer limit) {
+        AggregationOperation match = Aggregation.match(Criteria.where(conditionDto.getField()).is(conditionDto.getValue()));
+        AggregationOperation group = Aggregation.group("age","name");
+        AggregationOperation sort = Aggregation.sort(sortDto.getOrderByType(), sortDto.getOrderByFields());
+        AggregationOperation lim = Aggregation.limit(limit);
+        AggregationOperation sk = Aggregation.skip(skip);
+        Aggregation agg = Aggregation.newAggregation(
+                match,
+                group,
+                sort,
+                lim,
+                sk
+        );
+
+        AggregationResults<EntityDto> results = mongoOperations.aggregate(agg, Entity.class, EntityDto.class);
+        return results.getMappedResults();
     }
 }
