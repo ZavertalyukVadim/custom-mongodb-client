@@ -2,6 +2,7 @@ package com.dao;
 
 import com.dto.ConditionDto;
 import com.dto.EntityDto;
+import com.dto.GroupByDto;
 import com.dto.SortDto;
 import com.entity.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,9 +48,9 @@ public class EntityTestDao {
         return mongoOperations.find(Query.query(Criteria.where("name").is(name)).with(new Sort(Sort.Direction.DESC, "" + sortBy)).skip(skip).limit(limit), Entity.class);
     }
 
-    public List<EntityDto> find(ConditionDto conditionDto, String groupBy, SortDto sortDto, Integer skip, Integer limit) {
+    public List<EntityDto> find(ConditionDto conditionDto, GroupByDto groupBy, SortDto sortDto, Integer skip, Integer limit) {
         AggregationOperation match = Aggregation.match(Criteria.where(conditionDto.getField()).is(conditionDto.getValue()));
-        AggregationOperation group = Aggregation.group("age","name");
+        AggregationOperation group = Aggregation.group(groupBy.getFirstFiled(),groupBy.getSecondField());
         AggregationOperation sort = Aggregation.sort(sortDto.getOrderByType(), sortDto.getOrderByFields());
         AggregationOperation lim = Aggregation.limit(limit);
         AggregationOperation sk = Aggregation.skip(skip);

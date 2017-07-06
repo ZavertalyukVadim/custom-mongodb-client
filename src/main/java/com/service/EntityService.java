@@ -4,6 +4,7 @@ import com.dao.EntityDao;
 import com.dao.EntityTestDao;
 import com.dto.ConditionDto;
 import com.dto.EntityDto;
+import com.dto.GroupByDto;
 import com.dto.SortDto;
 import com.entity.Entity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,20 +29,37 @@ public class EntityService {
             test();
         }
         String select = "*";//
-        String condition="";
-        String groupBy = "`age` and `name`";
-        String orderBy = "name";
-        Integer skip =1 ;
-        Integer limit=3;
-        return entityTestDao.find(getCondition(condition),groupBy, getInformationForOrder(orderBy),skip,limit);
+        String condition = "";
+        String groupBy = "";
+        String orderBy = "";
+        Integer skip = 0;
+        Integer limit = 0;
+        return entityTestDao.find(getInformationCondition(condition), getInformationForGroupBy(groupBy), getInformationForOrder(orderBy), getInformationForSkip(), getInformationForLimit());
     }
-    private SortDto  getInformationForOrder(String orderBy){
-        SortDto sortDto =  new SortDto();
+
+    private Integer getInformationForSkip() {
+        return 1;
+    }
+
+    private Integer getInformationForLimit() {
+        return 3;
+    }
+
+    private GroupByDto getInformationForGroupBy(String groupBy) {
+        GroupByDto groupByDto = new GroupByDto();
+        groupByDto.setFirstFiled("name");
+        groupByDto.setSecondField("age");
+        return groupByDto;
+    }
+
+    private SortDto getInformationForOrder(String orderBy) {
+        SortDto sortDto = new SortDto();
         sortDto.setOrderByType(Sort.Direction.DESC);
         sortDto.setOrderByFields("age");
         return sortDto;
     }
-    private ConditionDto getCondition(String condition){
+
+    private ConditionDto getInformationCondition(String condition) {
         ConditionDto conditionDto = new ConditionDto();
         conditionDto.setField("name");
         conditionDto.setOperator("=");
