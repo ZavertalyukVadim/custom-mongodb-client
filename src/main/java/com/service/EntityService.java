@@ -28,7 +28,7 @@ public class EntityService {
         QueryDto queryDto =  new QueryDto(query);
         queryDto.setLimit(3);
         queryDto.setSkip(1);
-        List<EntityDto> list= entityTestDao.find(getInformationCondition(queryDto.getCondition()), getInformationForGroupBy(queryDto.getGroupBy()), getInformationForOrder(queryDto.getOrderBy()), getInformationForSkip(queryDto.getSkip()), getInformationForLimit(queryDto.getLimit()));
+        List<EntityDto> list= entityTestDao.findForAll(getInformationCondition(queryDto.getCondition()), getInformationForGroupBy(queryDto.getGroupBy()), getInformationForOrder(queryDto.getOrderBy()), getInformationForSkip(queryDto.getSkip()), getInformationForLimit(queryDto.getLimit()));
         System.out.println(list);
     }
 
@@ -75,5 +75,16 @@ public class EntityService {
         entity3.setName("lol2");
         entity3.setAge(103);
         entityDao.save(entity3);
+    }
+
+    public void getField(String query) {
+        if (entityDao.findAll().isEmpty()) {
+            test();
+        }
+        QueryDto queryDto =  new QueryDto(query);
+        queryDto.setLimit(3);
+        queryDto.setSkip(1);
+        List<AgeDto> list= entityTestDao.findForField(getInformationCondition(queryDto.getCondition()), getInformationForGroupBy(queryDto.getGroupBy()), getInformationForOrder(queryDto.getOrderBy()), getInformationForSkip(queryDto.getSkip()), getInformationForLimit(queryDto.getLimit()));
+        System.out.println(list);
     }
 }

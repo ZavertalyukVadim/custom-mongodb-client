@@ -39,8 +39,11 @@ public class ClientMongoApplication implements CommandLineRunner {
             switch (query) {
                 case "stop":
                     return;
-                case "view":
+                case "*":
                     entityService.getAllEntity(query);
+                    break;
+                case "age":
+                    entityService.getField(query);
                     break;
                 default:
                     System.out.println("write correct keyword");
