@@ -1,18 +1,18 @@
 package com.entity;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="entity")
+@Document(collection = "entity")
 public class Entity {
-    @org.springframework.data.annotation.Id
-    private
-    String id;
+    @Id
+    private String id;
 
-    private
-    String name;
+    private String name;
 
-    private
-    Integer age;
+    private Integer age;
+
+    private Object object;
 
     public Entity() {
     }
@@ -46,11 +46,21 @@ public class Entity {
         this.age = age;
     }
 
+    public Object getObject() {
+        return object;
+    }
+
+    public void setObject(Object object) {
+        this.object = object;
+    }
+
     @Override
     public String toString() {
         return "Entity{" +
-                "name='" + name + '\'' +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
                 ", age=" + age +
+                ", object=" + object +
                 '}';
     }
 }

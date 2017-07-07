@@ -9,10 +9,12 @@ import org.springframework.data.mongodb.core.aggregation.AggregationOperation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Repository
+@Transactional
 public class EntityTestDao {
     private final MongoOperations mongoOperations;
 
@@ -35,7 +37,8 @@ public class EntityTestDao {
 
     private Aggregation getAggregation(ConditionDto conditionDto, GroupByDto groupBy, SortDto sortDto, Integer skip, Integer limit) {
         AggregationOperation match = Aggregation.match(Criteria.where(conditionDto.getField()).is(conditionDto.getValue()));
-        AggregationOperation group = Aggregation.group(groupBy.getFirstFiled(), groupBy.getSecondField());
+
+        AggregationOperation group = Aggregation.group("name","age","object");
         AggregationOperation sort = Aggregation.sort(sortDto.getOrderByType(), sortDto.getOrderByFields());
         AggregationOperation lim = Aggregation.limit(limit);
         AggregationOperation sk = Aggregation.skip(skip);

@@ -8,4 +8,8 @@ import java.util.List;
 public interface EntityDao extends MongoRepository<Entity, String> {
     //    @Query(value = "{'name': ?0 }",fields = "{'name':1, 'age':1}")
     List<Entity> getAllByName(String name);
+
+    Entity getByAge(int i);
+
+    void removeAllByNameLike(String name);
 }
