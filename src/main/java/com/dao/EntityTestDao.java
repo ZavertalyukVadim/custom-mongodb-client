@@ -2,12 +2,12 @@ package com.dao;
 
 import com.dto.*;
 import com.entity.Entity;
+import com.entity.Object;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationOperation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
-import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,10 +25,14 @@ public class EntityTestDao {
 
     public List<EntityDto> findForAll(ConditionDto conditionDto, GroupByDto groupBy, SortDto sortDto, Integer skip, Integer limit) {
         Aggregation agg = getAggregation(conditionDto, groupBy, sortDto, skip, limit);
-        AggregationResults<EntityDto> results = mongoOperations.aggregate(agg, Entity.class, EntityDto.class);
+        AggregationResults<EntityDto> results = mongoOperations.aggregate(agg, Object.class, EntityDto.class);
         return results.getMappedResults();
     }
-
+    public List<ObjectDto> findForAllOnSubField(ConditionDto conditionDto, GroupByDto groupBy, SortDto sortDto, Integer skip, Integer limit) {
+        Aggregation agg = getAggregation(conditionDto, groupBy, sortDto, skip, limit);
+        AggregationResults<ObjectDto> results = mongoOperations.aggregate(agg, Object.class, ObjectDto.class);
+        return results.getMappedResults();
+    }
     public List<AgeDto> findForField(ConditionDto conditionDto, GroupByDto groupBy, SortDto sortDto, Integer skip, Integer limit) {
         Aggregation agg = getAggregation(conditionDto, groupBy, sortDto, skip, limit);
         AggregationResults<AgeDto> results = mongoOperations.aggregate(agg, Entity.class, AgeDto.class);
@@ -36,14 +40,14 @@ public class EntityTestDao {
     }
 
     private Aggregation getAggregation(ConditionDto conditionDto, GroupByDto groupBy, SortDto sortDto, Integer skip, Integer limit) {
-        AggregationOperation match = Aggregation.match(Criteria.where(conditionDto.getField()).is(conditionDto.getValue()));
+//        AggregationOperation match = Aggregation.match(Criteria.where(conditionDto.getField()).is(conditionDto.getValue()));
 
-        AggregationOperation group = Aggregation.group("name","age","object");
+        AggregationOperation group = Aggregation.group("firstName","lastName");
         AggregationOperation sort = Aggregation.sort(sortDto.getOrderByType(), sortDto.getOrderByFields());
         AggregationOperation lim = Aggregation.limit(limit);
         AggregationOperation sk = Aggregation.skip(skip);
         return Aggregation.newAggregation(
-                match,
+//                match,
                 group,
                 sort,
                 lim,

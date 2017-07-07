@@ -56,7 +56,7 @@ public class EntityService {
     private SortDto getInformationForOrder(String orderBy) {
         SortDto sortDto = new SortDto();
         sortDto.setOrderByType(Sort.Direction.DESC);
-        sortDto.setOrderByFields("age");
+        sortDto.setOrderByFields("lastName");
         return sortDto;
     }
 
@@ -96,6 +96,14 @@ public class EntityService {
         queryDto.setLimit(3);
         queryDto.setSkip(1);
         List<AgeDto> list = entityTestDao.findForField(getInformationCondition(queryDto.getCondition()), getInformationForGroupBy(queryDto.getGroupBy()), getInformationForOrder(queryDto.getOrderBy()), getInformationForSkip(queryDto.getSkip()), getInformationForLimit(queryDto.getLimit()));
+        System.out.println(list);
+    }
+
+    public void getSubField(String query) {
+        QueryDto queryDto = new QueryDto(query);
+        queryDto.setLimit(3);
+        queryDto.setSkip(0);
+        List<ObjectDto> list = entityTestDao.findForAllOnSubField(getInformationCondition(queryDto.getCondition()), getInformationForGroupBy(queryDto.getGroupBy()), getInformationForOrder(queryDto.getOrderBy()), getInformationForSkip(queryDto.getSkip()), getInformationForLimit(queryDto.getLimit()));
         System.out.println(list);
     }
 }
