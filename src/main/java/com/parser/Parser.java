@@ -8,7 +8,14 @@ public class Parser {
         SqlDto sqlDto =  new SqlDto();
         sqlDto.setProjections(parseSelect(exampleSql));
         sqlDto.setTarget(parseTarget(exampleSql));
+        sqlDto.setSkip(parseSkip(exampleSql));
+        System.out.println(sqlDto.getSkip());
         return sqlDto;
+    }
+
+    private Integer parseSkip(String exampleSql) {
+        String cutString = exampleSql.trim().substring(exampleSql.indexOf("OFFSET")+6).trim();
+        return Integer.parseInt(cutString);
     }
 
     private String parseTarget(String exampleSql) {
