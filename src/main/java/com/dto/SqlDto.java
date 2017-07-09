@@ -64,4 +64,17 @@ public class SqlDto {
     public void setProjections(String projections) {
         this.projections = projections;
     }
+
+    @Override
+    public String toString() {
+        return "SqlDto{" +
+                "projections='" + projections + '\'' +
+                ", target='" + target + '\'' +
+                ", skip=" + skip +
+                ", limit=" + limit +
+                ", conditionDto=" + conditionDto +
+                ", groupByDto=" + groupByDto +
+                ", sortDto=" + sortDto +
+                '}';
+    }
 }

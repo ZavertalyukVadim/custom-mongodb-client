@@ -7,7 +7,6 @@ import com.dto.*;
 import com.entity.Entity;
 import com.entity.Object;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,61 +24,44 @@ public class EntityService {
         this.objectDao = objectDao;
     }
 
-    public void getAllFieldsFromEntity(String query) {
+    public void getAllFieldsFromEntity(SqlDto query) {
 
         if (entityDao.findAll().isEmpty()) {
             test();
         }
-        QueryDto queryDto = new QueryDto(query);
-        queryDto.setLimit(3);
-        queryDto.setSkip(0);
-        List<EntityDto> list = entityTestDao.findForAll(getInformationConditionForEntity(queryDto.getCondition()), getInformationForGroupByForEntity(queryDto.getGroupBy()), getInformationForOrderForEntity(queryDto.getOrderBy()), getInformationForSkip(queryDto.getSkip()), getInformationForLimit(queryDto.getLimit()));
+        List<EntityDto> list = entityTestDao.findForAll(getInformationConditionForEntity(query.getConditionDto()), getInformationForGroupByForEntity(query.getGroupByDto()), getInformationForOrderForEntity(query.getSortDto()), getInformationForSkip(query.getSkip()), getInformationForLimit(query.getLimit()));
         System.out.println(list);
     }
 
-    public void getFieldSex(String query) {
+    public void getFieldSex(SqlDto query) {
         if (entityDao.findAll().isEmpty()) {
             test();
         }
-        QueryDto queryDto = new QueryDto(query);
-        queryDto.setLimit(3);
-        queryDto.setSkip(0);
-        List<SexDto> list = entityTestDao.findForFieldSex(getInformationConditionForEntity(queryDto.getCondition()), getInformationForGroupByForEntity(queryDto.getGroupBy()), getInformationForOrderForEntity(queryDto.getOrderBy()), getInformationForSkip(queryDto.getSkip()), getInformationForLimit(queryDto.getLimit()));
+        List<SexDto> list = entityTestDao.findForFieldSex(getInformationConditionForEntity(query.getConditionDto()), getInformationForGroupByForEntity(query.getGroupByDto()), getInformationForOrderForEntity(query.getSortDto()), getInformationForSkip(query.getSkip()), getInformationForLimit(query.getLimit()));
         System.out.println(list);
     }
 
-    public void getFieldName(String query) {
+    public void getFieldName(SqlDto query) {
         if (entityDao.findAll().isEmpty()) {
             test();
         }
-        QueryDto queryDto = new QueryDto(query);
-        queryDto.setLimit(3);
-        queryDto.setSkip(0);
-        List<NameDto> list = entityTestDao.findForFieldName(getInformationConditionForEntity(queryDto.getCondition()), getInformationForGroupByForEntity(queryDto.getGroupBy()), getInformationForOrderForEntity(queryDto.getOrderBy()), getInformationForSkip(queryDto.getSkip()), getInformationForLimit(queryDto.getLimit()));
+        List<NameDto> list = entityTestDao.findForFieldName(getInformationConditionForEntity(query.getConditionDto()), getInformationForGroupByForEntity(query.getGroupByDto()), getInformationForOrderForEntity(query.getSortDto()), getInformationForSkip(query.getSkip()), getInformationForLimit(query.getLimit()));
         System.out.println(list);
     }
 
-    public void getAllFieldsFromSubField(String query) {
-        QueryDto queryDto = new QueryDto(query);
-        queryDto.setLimit(3);
-        queryDto.setSkip(0);
-        List<ObjectDto> list = entityTestDao.findFieldsFromSubField(getInformationConditionForObject(queryDto.getCondition()), getInformationForGroupByForObject(queryDto.getGroupBy()), getInformationForOrderForObject(queryDto.getOrderBy()), getInformationForSkip(queryDto.getSkip()), getInformationForLimit(queryDto.getLimit()));
+    public void getAllFieldsFromSubField(SqlDto query) {
+
+        List<ObjectDto> list = entityTestDao.findFieldsFromSubField(getInformationConditionForObject(query.getConditionDto()), getInformationForGroupByForObject(query.getGroupByDto()), getInformationForOrderForObject(query.getSortDto()), getInformationForSkip(query.getSkip()), getInformationForLimit(query.getLimit()));
         System.out.println(list);
     }
 
-    public void getSubFieldFirstName(String query) {
-        QueryDto queryDto = new QueryDto(query);
-        queryDto.setLimit(3);
-        queryDto.setSkip(0);
-        List<FirstNameDto> list = entityTestDao.findSubFieldFirstName(getInformationConditionForObject(queryDto.getCondition()), getInformationForGroupByForObject(queryDto.getGroupBy()), getInformationForOrderForObject(queryDto.getOrderBy()), getInformationForSkip(queryDto.getSkip()), getInformationForLimit(queryDto.getLimit()));
+    public void getSubFieldFirstName(SqlDto query) {
+        List<FirstNameDto> list = entityTestDao.findSubFieldFirstName(getInformationConditionForObject(query.getConditionDto()), getInformationForGroupByForObject(query.getGroupByDto()), getInformationForOrderForObject(query.getSortDto()), getInformationForSkip(query.getSkip()), getInformationForLimit(query.getLimit()));
         System.out.println(list);
     }
 
-    public void getSubFieldLastName(String query) {
-        QueryDto queryDto = new QueryDto(query);
-        queryDto.setLimit(3);
-        queryDto.setSkip(0);
-        List<LastNameDto> list = entityTestDao.findSubFieldLastName(getInformationConditionForObject(queryDto.getCondition()), getInformationForGroupByForObject(queryDto.getGroupBy()), getInformationForOrderForObject(queryDto.getOrderBy()), getInformationForSkip(queryDto.getSkip()), getInformationForLimit(queryDto.getLimit()));
+    public void getSubFieldLastName(SqlDto query) {
+        List<LastNameDto> list = entityTestDao.findSubFieldLastName(getInformationConditionForObject(query.getConditionDto()), getInformationForGroupByForObject(query.getGroupByDto()), getInformationForOrderForObject(query.getSortDto()), getInformationForSkip(query.getSkip()), getInformationForLimit(query.getLimit()));
         System.out.println(list);
     }
 
@@ -91,55 +73,55 @@ public class EntityService {
         return limit;
     }
 
-    private GroupByDto getInformationForGroupByForEntity(String groupBy) {
-        GroupByDto groupByDto = new GroupByDto();
-        groupByDto.setFirstFiled("sex");
-        groupByDto.setSecondField("name");
-        groupByDto.setThirdField("object");
+    private GroupByDto getInformationForGroupByForEntity(GroupByDto groupByDto) {
+//        GroupByDto groupByDto = new GroupByDto();
+//        groupByDto.setFirstFiled("sex");
+//        groupByDto.setSecondField("name");
+//        groupByDto.setThirdField("object");
         return groupByDto;
     }
 
-    private SortDto getInformationForOrderForEntity(String orderBy) {
-        SortDto sortDto = new SortDto();
-        sortDto.setOrderByType(Sort.Direction.DESC);
-        sortDto.setOrderByFields("name");
+    private SortDto getInformationForOrderForEntity(SortDto sortDto) {
+//        SortDto sortDto = new SortDto();
+//        sortDto.setOrderByType(Sort.Direction.DESC);
+//        sortDto.setOrderByFields("name");
         return sortDto;
     }
 
-    private ConditionDto getInformationConditionForEntity(String condition) {
-        ConditionDto conditionDto = new ConditionDto();
-        conditionDto.setFirstField("name");
-        conditionDto.setFirstOperator("=");
-        conditionDto.setFirstValue("lol");
-        conditionDto.setExtended(true);
-        conditionDto.setStandardLogicalOperation("OR");
-        conditionDto.setSecondField("sex");
-        conditionDto.setSecondOperator("<>");
-        conditionDto.setSecondValue("M");
+    private ConditionDto getInformationConditionForEntity(ConditionDto conditionDto) {
+//        ConditionDto conditionDto = new ConditionDto();
+//        conditionDto.setFirstField("name");
+//        conditionDto.setFirstOperator("=");
+//        conditionDto.setFirstValue("lol");
+//        conditionDto.setExtended(true);
+//        conditionDto.setStandardLogicalOperation("OR");
+//        conditionDto.setSecondField("sex");
+//        conditionDto.setSecondOperator("<>");
+//        conditionDto.setSecondValue("M");
         return conditionDto;
     }
 
 
-    private GroupByDto getInformationForGroupByForObject(String groupBy) {
-        GroupByDto groupByDto = new GroupByDto();
-        groupByDto.setFirstFiled("firstName");
-        groupByDto.setSecondField("lastName");
+    private GroupByDto getInformationForGroupByForObject(GroupByDto groupByDto) {
+//        GroupByDto groupByDto = new GroupByDto();
+//        groupByDto.setFirstFiled("firstName");
+//        groupByDto.setSecondField("lastName");
         return groupByDto;
     }
 
-    private SortDto getInformationForOrderForObject(String orderBy) {
-        SortDto sortDto = new SortDto();
-        sortDto.setOrderByType(Sort.Direction.DESC);
-        sortDto.setOrderByFields("firstName");
+    private SortDto getInformationForOrderForObject(SortDto sortDto) {
+//        SortDto sortDto = new SortDto();
+//        sortDto.setOrderByType(Sort.Direction.DESC);
+//        sortDto.setOrderByFields("firstName");
         return sortDto;
     }
 
-    private ConditionDto getInformationConditionForObject(String condition) {
-        ConditionDto conditionDto = new ConditionDto();
-        conditionDto.setFirstField("firstName");
-        conditionDto.setFirstOperator("=");
-        conditionDto.setFirstValue("first");
-        conditionDto.setExtended(false);
+    private ConditionDto getInformationConditionForObject(ConditionDto conditionDto) {
+//        ConditionDto conditionDto = new ConditionDto();
+//        conditionDto.setFirstField("firstName");
+//        conditionDto.setFirstOperator("=");
+//        conditionDto.setFirstValue("first");
+//        conditionDto.setExtended(false);
         return conditionDto;
     }
 

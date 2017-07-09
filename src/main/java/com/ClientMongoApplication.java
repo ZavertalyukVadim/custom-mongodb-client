@@ -38,37 +38,40 @@ public class ClientMongoApplication implements CommandLineRunner {
                 "ORDER BY category.name ASC " +
                 "LIMIT 3 " +
                 "OFFSET 0";
-        Parser parser =  new Parser();
-        SqlDto sqlDto = parser.parse(exampleSql);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String query;
         while (true) {
             System.out.print("Write = ");
             query = bufferedReader.readLine();
-            switch (query) {
+            Parser parser =  new Parser();
+            SqlDto sqlDto = parser.parse(query);
+            switch (sqlDto.getProjections()) {
                 case "*":
-                    entityService.getAllFieldsFromEntity(query);
+                    entityService.getAllFieldsFromEntity(sqlDto);
                     break;
                 case "sex":
-                    entityService.getFieldSex(query);
+                    entityService.getFieldSex(sqlDto);
                     break;
                 case "name":
-                    entityService.getFieldName(query);
+                    entityService.getFieldName(sqlDto);
                     break;
                 case "entity.*":
-                    entityService.getAllFieldsFromSubField(query);
+                    entityService.getAllFieldsFromSubField(sqlDto);
                     break;
                 case "object.firstName":
-                    entityService.getSubFieldFirstName(query);
+                    entityService.getSubFieldFirstName(sqlDto);
                     break;
                 case "object.lastName":
-                    entityService.getSubFieldLastName(query);
+                    entityService.getSubFieldLastName(sqlDto);
                     break;
                 case "exit":
                     return;
                 default:
-                    System.out.println("Write correct keyword");
+                    System.out.println("Write correct query");
             }
         }
     }
+
+
+    String exampleSql = "SELECT * FROM entity WHERE name = `lol` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
 }
