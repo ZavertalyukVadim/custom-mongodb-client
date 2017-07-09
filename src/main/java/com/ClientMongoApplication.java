@@ -1,5 +1,7 @@
 package com;
 
+import com.dto.SqlDto;
+import com.parser.Parser;
 import com.service.EntityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -29,10 +31,19 @@ public class ClientMongoApplication implements CommandLineRunner {
     }
 
     private void menu() throws IOException {
+        String exampleSql = "SELECT object.firstName " +
+                "FROM category " +
+                "WHERE category.name = '00' " +
+                "GROUP BY category.category_id, category.name, category.description " +
+                "ORDER BY COUNT(category.category_id) ASC " +
+                "LIMIT 3 " +
+                "OFFSET 0";
+        Parser parser =  new Parser();
+        SqlDto sqlDto = parser.parse(exampleSql);
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String query;
         while (true) {
-            System.out.print("write = ");
+            System.out.print("Write = ");
             query = bufferedReader.readLine();
             switch (query) {
                 case "*":
@@ -56,7 +67,7 @@ public class ClientMongoApplication implements CommandLineRunner {
                 case "exit":
                     return;
                 default:
-                    System.out.println("write correct keyword");
+                    System.out.println("Write correct keyword");
             }
         }
     }
