@@ -9,8 +9,13 @@ public class Parser {
         sqlDto.setProjections(parseSelect(exampleSql));
         sqlDto.setTarget(parseTarget(exampleSql));
         sqlDto.setSkip(parseSkip(exampleSql));
-        System.out.println(sqlDto.getSkip());
+        sqlDto.setLimit(parseLimit(exampleSql));
         return sqlDto;
+    }
+
+    private Integer parseLimit(String exampleSql) {
+        String cutString = exampleSql.trim().substring(exampleSql.indexOf("LIMIT")+5).trim();
+        return Integer.parseInt(cutString.substring(0,cutString.indexOf(" OFFSET")));
     }
 
     private Integer parseSkip(String exampleSql) {

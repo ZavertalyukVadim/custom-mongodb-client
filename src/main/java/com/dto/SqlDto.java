@@ -4,6 +4,15 @@ public class SqlDto {
     private String projections;
     private String target;
     private Integer skip;
+    private Integer limit;
+
+    public Integer getLimit() {
+        return limit;
+    }
+
+    public void setLimit(Integer limit) {
+        this.limit = limit;
+    }
 
     public Integer getSkip() {
         return skip;
