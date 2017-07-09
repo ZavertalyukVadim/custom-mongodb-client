@@ -18,7 +18,6 @@ public class Parser {
         sqlDto.setLimit(parseLimit(exampleSql));
         sqlDto.setConditionDto(parseCondition(exampleSql));
         sqlDto.setGroupByDto(parseGroupBy(exampleSql));
-        System.out.println(sqlDto.getGroupByDto());
         sqlDto.setSortDto(parseSort(exampleSql));
         return sqlDto;
     }
