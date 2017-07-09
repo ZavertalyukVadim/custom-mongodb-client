@@ -1,7 +1,10 @@
 package com.parser;
 
 import com.dto.ConditionDto;
+import com.dto.GroupByDto;
+import com.dto.SortDto;
 import com.dto.SqlDto;
+import org.springframework.data.domain.Sort;
 
 import java.util.Objects;
 
@@ -14,8 +17,28 @@ public class Parser {
         sqlDto.setSkip(parseSkip(exampleSql));
         sqlDto.setLimit(parseLimit(exampleSql));
         sqlDto.setConditionDto(parseCondition(exampleSql));
-        System.out.println(sqlDto.getConditionDto());
+        sqlDto.setGroupByDto(parseGroupBy(exampleSql));
+        sqlDto.setSortDto(parseSort(exampleSql));
         return sqlDto;
+    }
+
+    private SortDto parseSort(String exampleSql) {
+        SortDto sortDto =  new SortDto();
+        String cutOffStringFromOrder = exampleSql.trim().substring(exampleSql.indexOf("ORDER") + 5).trim();
+        String cutOffStringFromBy = cutOffStringFromOrder.substring(cutOffStringFromOrder.indexOf("BY")+2).trim();
+
+        String orderByFields = cutOffStringFromBy.substring(0,cutOffStringFromBy.indexOf(" ")).trim();
+        String cutOffStringFromOrderByFields = cutOffStringFromBy.substring(cutOffStringFromBy.indexOf(orderByFields)+orderByFields.length()).trim();
+        sortDto.setOrderByFields(orderByFields);
+        String orderByType = cutOffStringFromOrderByFields.substring(0,cutOffStringFromOrderByFields.indexOf(" ")).trim();
+        sortDto.setOrderByType(Sort.Direction.fromString(orderByType));
+        return sortDto;
+    }
+
+    private GroupByDto parseGroupBy(String exampleSql) {
+        GroupByDto groupByDto =  new GroupByDto();
+
+        return groupByDto;
     }
 
     private ConditionDto parseCondition(String exampleSql) {

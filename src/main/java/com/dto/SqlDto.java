@@ -6,6 +6,24 @@ public class SqlDto {
     private Integer skip;
     private Integer limit;
     private ConditionDto conditionDto;
+    private GroupByDto groupByDto;
+    private SortDto sortDto;
+
+    public SortDto getSortDto() {
+        return sortDto;
+    }
+
+    public void setSortDto(SortDto sortDto) {
+        this.sortDto = sortDto;
+    }
+
+    public GroupByDto getGroupByDto() {
+        return groupByDto;
+    }
+
+    public void setGroupByDto(GroupByDto groupByDto) {
+        this.groupByDto = groupByDto;
+    }
 
     public ConditionDto getConditionDto() {
         return conditionDto;

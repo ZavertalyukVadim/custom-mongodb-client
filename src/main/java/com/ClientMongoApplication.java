@@ -35,7 +35,7 @@ public class ClientMongoApplication implements CommandLineRunner {
                 "FROM entity " +
                 "WHERE entity.name = `lol` " +
                 "GROUP BY entity.name " +
-                "ORDER BY COUNT(entity.sex) ASC " +
+                "ORDER BY category.name ASC " +
                 "LIMIT 3 " +
                 "OFFSET 0";
         Parser parser =  new Parser();
