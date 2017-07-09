@@ -34,8 +34,7 @@ public class Parser {
         String firstValue = cutFirstOperator.substring(1, cutFirstOperator.indexOf(" ") - 1).trim();
         String cutFirstValue = cutFirstOperator.substring(cutFirstOperator.indexOf(firstValue) + firstValue.length() + 1).trim();
         conditionDto.setFirstValue(firstValue);
-        System.out.println(cutFirstValue);
-        if (Objects.equals(cutFirstValue.substring(0, cutFirstValue.indexOf(" ")), "GROUP BY")) {
+        if (Objects.equals(cutFirstValue.substring(0, cutFirstValue.indexOf(" ")), "GROUP")) {
             conditionDto.setExtended(false);
             return conditionDto;
         }
