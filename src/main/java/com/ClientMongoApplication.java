@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Objects;
 
 @SpringBootApplication
 public class ClientMongoApplication implements CommandLineRunner {
@@ -31,19 +32,15 @@ public class ClientMongoApplication implements CommandLineRunner {
     }
 
     private void menu() throws IOException {
-        String exampleSql = "SELECT * " +
-                "FROM entity " +
-                "WHERE entity.name = `lol` " +
-                "GROUP BY entity.name, entity.sex, entity.object " +
-                "ORDER BY category.name ASC " +
-                "LIMIT 3 " +
-                "OFFSET 0";
+        String exampleSql = "SELECT * FROM entity WHERE name = `lol` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String query;
         while (true) {
             System.out.print("Write = ");
             query = bufferedReader.readLine();
-            Parser parser =  new Parser();
+            if (Objects.equals(query, "exit"))
+                return;
+            Parser parser = new Parser();
             SqlDto sqlDto = parser.parse(query);
             switch (sqlDto.getProjections()) {
                 case "*":
@@ -68,10 +65,9 @@ public class ClientMongoApplication implements CommandLineRunner {
                     return;
                 default:
                     System.out.println("Write correct query");
+
             }
+
         }
     }
-
-
-    String exampleSql = "SELECT * FROM entity WHERE name = `lol` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
 }
