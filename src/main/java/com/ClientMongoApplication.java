@@ -37,8 +37,6 @@ public class ClientMongoApplication implements CommandLineRunner {
             System.out.print("write = ");
             query = bufferedReader.readLine();
             switch (query) {
-                case "stop":
-                    return;
                 case "*":
                     entityService.getAllFieldsFromEntity(query);
                     break;
@@ -57,6 +55,8 @@ public class ClientMongoApplication implements CommandLineRunner {
                 case "object.lastName":
                     entityService.getSubFieldLastName(query);
                     break;
+                case "exit":
+                    return;
                 default:
                     System.out.println("write correct keyword");
             }
