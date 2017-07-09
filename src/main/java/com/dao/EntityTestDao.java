@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationOperation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,29 +26,60 @@ public class EntityTestDao {
 
     public List<EntityDto> findForAll(ConditionDto conditionDto, GroupByDto groupBy, SortDto sortDto, Integer skip, Integer limit) {
         Aggregation agg = getAggregation(conditionDto, groupBy, sortDto, skip, limit);
-        AggregationResults<EntityDto> results = mongoOperations.aggregate(agg, Object.class, EntityDto.class);
+        AggregationResults<EntityDto> results = mongoOperations.aggregate(agg, Entity.class, EntityDto.class);
         return results.getMappedResults();
     }
-    public List<ObjectDto> findForAllOnSubField(ConditionDto conditionDto, GroupByDto groupBy, SortDto sortDto, Integer skip, Integer limit) {
-        Aggregation agg = getAggregation(conditionDto, groupBy, sortDto, skip, limit);
-        AggregationResults<ObjectDto> results = mongoOperations.aggregate(agg, Object.class, ObjectDto.class);
-        return results.getMappedResults();
-    }
-    public List<AgeDto> findForField(ConditionDto conditionDto, GroupByDto groupBy, SortDto sortDto, Integer skip, Integer limit) {
+
+    public List<AgeDto> findForFieldAge(ConditionDto conditionDto, GroupByDto groupBy, SortDto sortDto, Integer skip, Integer limit) {
         Aggregation agg = getAggregation(conditionDto, groupBy, sortDto, skip, limit);
         AggregationResults<AgeDto> results = mongoOperations.aggregate(agg, Entity.class, AgeDto.class);
         return results.getMappedResults();
     }
 
-    private Aggregation getAggregation(ConditionDto conditionDto, GroupByDto groupBy, SortDto sortDto, Integer skip, Integer limit) {
-//        AggregationOperation match = Aggregation.match(Criteria.where(conditionDto.getField()).is(conditionDto.getValue()));
+    public List<NameDto> findForFieldName(ConditionDto conditionDto, GroupByDto groupBy, SortDto sortDto, Integer skip, Integer limit) {
+        Aggregation agg = getAggregation(conditionDto, groupBy, sortDto, skip, limit);
+        AggregationResults<NameDto> results = mongoOperations.aggregate(agg, Entity.class, NameDto.class);
+        return results.getMappedResults();
+    }
 
-        AggregationOperation group = Aggregation.group("firstName","lastName");
+    public List<ObjectDto> findFieldOnSubField(ConditionDto conditionDto, GroupByDto groupBy, SortDto sortDto, Integer skip, Integer limit) {
+        Aggregation agg = getAggregation(conditionDto, groupBy, sortDto, skip, limit);
+        AggregationResults<ObjectDto> results = mongoOperations.aggregate(agg, Object.class, ObjectDto.class);
+        return results.getMappedResults();
+    }
+
+    public List<ObjectDto> findFieldsFromSubField(ConditionDto conditionDto, GroupByDto groupBy, SortDto sortDto, Integer skip, Integer limit) {
+        Aggregation agg = getAggregation(conditionDto, groupBy, sortDto, skip, limit);
+        AggregationResults<ObjectDto> results = mongoOperations.aggregate(agg, Object.class, ObjectDto.class);
+        return results.getMappedResults();
+    }
+
+    public List<FirstNameDto> findSubFieldFirstName(ConditionDto conditionDto, GroupByDto groupBy, SortDto sortDto, Integer skip, Integer limit) {
+        Aggregation agg = getAggregation(conditionDto, groupBy, sortDto, skip, limit);
+        AggregationResults<FirstNameDto> results = mongoOperations.aggregate(agg, Object.class, FirstNameDto.class);
+        return results.getMappedResults();
+    }
+
+    public List<LastNameDto> findSubFieldLastName(ConditionDto conditionDto, GroupByDto groupBy, SortDto sortDto, Integer skip, Integer limit) {
+        Aggregation agg = getAggregation(conditionDto, groupBy, sortDto, skip, limit);
+        AggregationResults<LastNameDto> results = mongoOperations.aggregate(agg, Object.class, LastNameDto.class);
+        return results.getMappedResults();
+    }
+
+    private Aggregation getAggregation(ConditionDto conditionDto, GroupByDto groupBy, SortDto sortDto, Integer skip, Integer limit) {
+        AggregationOperation match = Aggregation.match(Criteria.where(conditionDto.getField()).is(conditionDto.getValue()));
+        AggregationOperation group;
+        try{
+            group = Aggregation.group(groupBy.getFirstFiled(), groupBy.getSecondField(), groupBy.getThirdField());
+        }
+        catch (Exception e){
+            group = Aggregation.group(groupBy.getFirstFiled(), groupBy.getSecondField());
+        }
         AggregationOperation sort = Aggregation.sort(sortDto.getOrderByType(), sortDto.getOrderByFields());
         AggregationOperation lim = Aggregation.limit(limit);
         AggregationOperation sk = Aggregation.skip(skip);
         return Aggregation.newAggregation(
-//                match,
+                match,
                 group,
                 sort,
                 lim,

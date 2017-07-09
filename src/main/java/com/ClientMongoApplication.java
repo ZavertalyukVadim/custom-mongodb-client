@@ -40,13 +40,22 @@ public class ClientMongoApplication implements CommandLineRunner {
                 case "stop":
                     return;
                 case "*":
-                    entityService.getAllEntity(query);
-                    break;
-                case "entity.*":
-                    entityService.getSubField(query);
+                    entityService.getAllFieldsFromEntity(query);
                     break;
                 case "age":
-                    entityService.getField(query);
+                    entityService.getFieldAge(query);
+                    break;
+                case "name":
+                    entityService.getFieldName(query);
+                    break;
+                case "entity.*":
+                    entityService.getAllFieldsFromSubField(query);
+                    break;
+                case "object.firstName":
+                    entityService.getSubFieldFirstName(query);
+                    break;
+                case "object.lastName":
+                    entityService.getSubFieldLastName(query);
                     break;
                 default:
                     System.out.println("write correct keyword");

@@ -1,9 +1,8 @@
 package com.dto;
 
 
-public class ObjectDto {
+public class FirstNameDto {
     private String firstName;
-    private String lastName;
 
     public String getFirstName() {
         return firstName;
@@ -13,19 +12,10 @@ public class ObjectDto {
         this.firstName = firstName;
     }
 
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
     @Override
     public String toString() {
-        return "ObjectDto{" +
+        return "FirstNameDto{" +
                 "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
                 '}';
     }
 }
