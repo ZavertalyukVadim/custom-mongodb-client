@@ -31,7 +31,7 @@ public class ClientMongoApplication implements CommandLineRunner {
     }
 
     private void menu() throws IOException {
-        String exampleSql = "SELECT object.firstName " +
+        String exampleSql = "SELECT * " +
                 "FROM category " +
                 "WHERE category.name = '00' " +
                 "GROUP BY category.category_id, category.name, category.description " +
