@@ -4,7 +4,7 @@ import com.entity.Object;
 
 public class EntityDto {
     private String name;
-    private Integer age;
+    private String sex;
     private Object object ;
 
     public String getName() {
@@ -15,12 +15,12 @@ public class EntityDto {
         this.name = name;
     }
 
-    public Integer getAge() {
-        return age;
+    public String getSex() {
+        return sex;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     public Object getObject() {
@@ -35,7 +35,7 @@ public class EntityDto {
     public String toString() {
         return "EntityDto{" +
                 "name='" + name + '\'' +
-                ", age=" + age +
+                ", sex=" + sex +
                 ", object=" + object +
                 '}';
     }

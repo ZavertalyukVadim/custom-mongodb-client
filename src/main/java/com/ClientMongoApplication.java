@@ -40,8 +40,8 @@ public class ClientMongoApplication implements CommandLineRunner {
                 case "*":
                     entityService.getAllFieldsFromEntity(query);
                     break;
-                case "age":
-                    entityService.getFieldAge(query);
+                case "sex":
+                    entityService.getFieldSex(query);
                     break;
                 case "name":
                     entityService.getFieldName(query);

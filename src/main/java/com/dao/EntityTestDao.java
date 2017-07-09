@@ -30,9 +30,9 @@ public class EntityTestDao {
         return results.getMappedResults();
     }
 
-    public List<AgeDto> findForFieldAge(ConditionDto conditionDto, GroupByDto groupBy, SortDto sortDto, Integer skip, Integer limit) {
+    public List<SexDto> findForFieldSex(ConditionDto conditionDto, GroupByDto groupBy, SortDto sortDto, Integer skip, Integer limit) {
         Aggregation agg = getAggregation(conditionDto, groupBy, sortDto, skip, limit);
-        AggregationResults<AgeDto> results = mongoOperations.aggregate(agg, Entity.class, AgeDto.class);
+        AggregationResults<SexDto> results = mongoOperations.aggregate(agg, Entity.class, SexDto.class);
         return results.getMappedResults();
     }
 
@@ -67,12 +67,12 @@ public class EntityTestDao {
     }
 
     private Aggregation getAggregation(ConditionDto conditionDto, GroupByDto groupBy, SortDto sortDto, Integer skip, Integer limit) {
-        AggregationOperation match = Aggregation.match(Criteria.where(conditionDto.getField()).is(conditionDto.getValue()));
+
+        AggregationOperation match = Aggregation.match(getCriteriaForCondition(conditionDto));
         AggregationOperation group;
-        try{
+        try {
             group = Aggregation.group(groupBy.getFirstFiled(), groupBy.getSecondField(), groupBy.getThirdField());
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             group = Aggregation.group(groupBy.getFirstFiled(), groupBy.getSecondField());
         }
         AggregationOperation sort = Aggregation.sort(sortDto.getOrderByType(), sortDto.getOrderByFields());
@@ -85,5 +85,30 @@ public class EntityTestDao {
                 lim,
                 sk
         );
+    }
+
+    private Criteria getCriteriaForCondition(ConditionDto conditionDto) {
+        Criteria criteria = null;
+        switch (conditionDto.getOperator()) {
+            case "=":
+                criteria = Criteria.where(conditionDto.getField()).is(conditionDto.getValue());
+                break;
+            case "<>":
+                criteria = Criteria.where(conditionDto.getField()).ne(conditionDto.getValue());
+                break;
+            case ">":
+                criteria = Criteria.where(conditionDto.getField()).gt(conditionDto.getValue());
+                break;
+            case ">=":
+                criteria = Criteria.where(conditionDto.getField()).gte(conditionDto.getValue());
+                break;
+            case "<":
+                criteria = Criteria.where(conditionDto.getField()).lt(conditionDto.getValue());
+                break;
+            case "<=":
+                criteria = Criteria.where(conditionDto.getField()).lte(conditionDto.getValue());
+                break;
+        }
+        return criteria;
     }
 }

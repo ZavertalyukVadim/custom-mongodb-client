@@ -37,14 +37,14 @@ public class EntityService {
         System.out.println(list);
     }
 
-    public void getFieldAge(String query) {
+    public void getFieldSex(String query) {
         if (entityDao.findAll().isEmpty()) {
             test();
         }
         QueryDto queryDto = new QueryDto(query);
         queryDto.setLimit(3);
         queryDto.setSkip(0);
-        List<AgeDto> list = entityTestDao.findForFieldAge(getInformationConditionForEntity(queryDto.getCondition()), getInformationForGroupByForEntity(queryDto.getGroupBy()), getInformationForOrderForEntity(queryDto.getOrderBy()), getInformationForSkip(queryDto.getSkip()), getInformationForLimit(queryDto.getLimit()));
+        List<SexDto> list = entityTestDao.findForFieldSex(getInformationConditionForEntity(queryDto.getCondition()), getInformationForGroupByForEntity(queryDto.getGroupBy()), getInformationForOrderForEntity(queryDto.getOrderBy()), getInformationForSkip(queryDto.getSkip()), getInformationForLimit(queryDto.getLimit()));
         System.out.println(list);
     }
     public void getFieldName(String query) {
@@ -100,7 +100,7 @@ public class EntityService {
 
     private GroupByDto getInformationForGroupByForEntity(String groupBy) {
         GroupByDto groupByDto = new GroupByDto();
-        groupByDto.setFirstFiled("age");
+        groupByDto.setFirstFiled("sex");
         groupByDto.setSecondField("name");
         groupByDto.setThirdField("object");
         return groupByDto;
@@ -153,16 +153,16 @@ public class EntityService {
         objectDao.save(object);
         Entity entity = new Entity();
         entity.setName("lol");
-        entity.setAge(10);
+        entity.setSex("M");
         entity.setObject(object);
         entityDao.save(entity);
         Entity entity2 = new Entity();
         entity2.setName("lol1");
-        entity2.setAge(102);
+        entity2.setSex("W");
         entityDao.save(entity2);
         Entity entity3 = new Entity();
         entity3.setName("lol2");
-        entity3.setAge(103);
+        entity3.setSex("M");
         entityDao.save(entity3);
     }
 }

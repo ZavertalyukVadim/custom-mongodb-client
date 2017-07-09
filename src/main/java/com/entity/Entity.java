@@ -10,16 +10,11 @@ public class Entity {
 
     private String name;
 
-    private Integer age;
+    private String sex;
 
     private Object object;
 
     public Entity() {
-    }
-
-    public Entity(String name, Integer age) {
-        this.name = name;
-        this.age = age;
     }
 
     public String getId() {
@@ -38,12 +33,12 @@ public class Entity {
         this.name = name;
     }
 
-    public Integer getAge() {
-        return age;
+    public String getSex() {
+        return sex;
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     public Object getObject() {
@@ -59,7 +54,7 @@ public class Entity {
         return "Entity{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", age=" + age +
+                ", sex=" + sex +
                 ", object=" + object +
                 '}';
     }
