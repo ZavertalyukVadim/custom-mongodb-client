@@ -5,6 +5,15 @@ public class SqlDto {
     private String target;
     private Integer skip;
     private Integer limit;
+    private ConditionDto conditionDto;
+
+    public ConditionDto getConditionDto() {
+        return conditionDto;
+    }
+
+    public void setConditionDto(ConditionDto conditionDto) {
+        this.conditionDto = conditionDto;
+    }
 
     public Integer getLimit() {
         return limit;

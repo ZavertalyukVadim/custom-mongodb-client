@@ -32,10 +32,10 @@ public class ClientMongoApplication implements CommandLineRunner {
 
     private void menu() throws IOException {
         String exampleSql = "SELECT * " +
-                "FROM category " +
-                "WHERE category.name = '00' " +
-                "GROUP BY category.category_id, category.name, category.description " +
-                "ORDER BY COUNT(category.category_id) ASC " +
+                "FROM entity " +
+                "WHERE entity.name = `lol` " +
+                "GROUP BY entity.name " +
+                "ORDER BY COUNT(entity.sex) ASC " +
                 "LIMIT 3 " +
                 "OFFSET 0";
         Parser parser =  new Parser();

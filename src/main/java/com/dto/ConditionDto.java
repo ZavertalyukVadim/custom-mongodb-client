@@ -73,4 +73,18 @@ public class ConditionDto {
     public void setSecondValue(String secondValue) {
         this.secondValue = secondValue;
     }
+
+    @Override
+    public String toString() {
+        return "ConditionDto{" +
+                "firstField='" + firstField + '\'' +
+                ", firstOperator='" + firstOperator + '\'' +
+                ", firstValue='" + firstValue + '\'' +
+                ", standardLogicalOperation='" + standardLogicalOperation + '\'' +
+                ", extended=" + extended +
+                ", secondField='" + secondField + '\'' +
+                ", secondOperator='" + secondOperator + '\'' +
+                ", secondValue='" + secondValue + '\'' +
+                '}';
+    }
 }
