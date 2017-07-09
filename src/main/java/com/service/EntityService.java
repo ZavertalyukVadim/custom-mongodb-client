@@ -59,14 +59,6 @@ public class EntityService {
         System.out.println(list);
     }
 
-//    public void getSubField(String query) {
-//        QueryDto queryDto = new QueryDto(query);
-//        queryDto.setLimit(3);
-//        queryDto.setSkip(0);
-//        List<ObjectDto> list = entityTestDao.findFieldOnSubField(getInformationCondition(queryDto.getCondition()), getInformationForGroupBy(queryDto.getGroupBy()), getInformationForOrder(queryDto.getOrderBy()), getInformationForSkip(queryDto.getSkip()), getInformationForLimit(queryDto.getLimit()));
-//        System.out.println(list);
-//    }
-
     public void getAllFieldsFromSubField(String query) {
         QueryDto queryDto = new QueryDto(query);
         queryDto.setLimit(3);
@@ -132,7 +124,6 @@ public class EntityService {
         GroupByDto groupByDto = new GroupByDto();
         groupByDto.setFirstFiled("firstName");
         groupByDto.setSecondField("lastName");
-//        groupByDto.setThirdField("object");
         return groupByDto;
     }
 
