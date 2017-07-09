@@ -9,7 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 
 @SpringBootApplication
 public class ClientMongoApplication implements CommandLineRunner {
@@ -26,11 +25,10 @@ public class ClientMongoApplication implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        menu(strings);
+        menu();
     }
 
-    private void menu(String[] strings) throws IOException {
-        System.out.println(Arrays.toString(strings));
+    private void menu() throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
         String query;
         while (true) {

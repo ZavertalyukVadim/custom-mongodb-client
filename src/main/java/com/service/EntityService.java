@@ -47,6 +47,7 @@ public class EntityService {
         List<SexDto> list = entityTestDao.findForFieldSex(getInformationConditionForEntity(queryDto.getCondition()), getInformationForGroupByForEntity(queryDto.getGroupBy()), getInformationForOrderForEntity(queryDto.getOrderBy()), getInformationForSkip(queryDto.getSkip()), getInformationForLimit(queryDto.getLimit()));
         System.out.println(list);
     }
+
     public void getFieldName(String query) {
         if (entityDao.findAll().isEmpty()) {
             test();
@@ -115,9 +116,14 @@ public class EntityService {
 
     private ConditionDto getInformationConditionForEntity(String condition) {
         ConditionDto conditionDto = new ConditionDto();
-        conditionDto.setField("name");
-        conditionDto.setOperator("=");
-        conditionDto.setValue("lol");
+        conditionDto.setFirstField("name");
+        conditionDto.setFirstOperator("=");
+        conditionDto.setFirstValue("lol");
+        conditionDto.setExtended(true);
+        conditionDto.setStandardLogicalOperation("OR");
+        conditionDto.setSecondField("sex");
+        conditionDto.setSecondOperator("<>");
+        conditionDto.setSecondValue("M");
         return conditionDto;
     }
 
@@ -139,9 +145,10 @@ public class EntityService {
 
     private ConditionDto getInformationConditionForObject(String condition) {
         ConditionDto conditionDto = new ConditionDto();
-        conditionDto.setField("firstName");
-        conditionDto.setOperator("=");
-        conditionDto.setValue("first");
+        conditionDto.setFirstField("firstName");
+        conditionDto.setFirstOperator("=");
+        conditionDto.setFirstValue("first");
+        conditionDto.setExtended(false);
         return conditionDto;
     }
 

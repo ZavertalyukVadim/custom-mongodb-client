@@ -88,25 +88,65 @@ public class EntityTestDao {
     }
 
     private Criteria getCriteriaForCondition(ConditionDto conditionDto) {
+        Criteria criteria = firstPart(conditionDto);
+        if (conditionDto.getExtended()){
+            switch (conditionDto.getStandardLogicalOperation()){
+                case "AND":
+                    criteria.andOperator(secondPart(conditionDto));
+                    break;
+                case "OR":
+                    criteria.orOperator(secondPart(conditionDto));
+                    break;
+            }
+        }
+        return criteria;
+    }
+
+    private Criteria firstPart(ConditionDto conditionDto) {
         Criteria criteria = null;
-        switch (conditionDto.getOperator()) {
+        switch (conditionDto.getFirstOperator()) {
             case "=":
-                criteria = Criteria.where(conditionDto.getField()).is(conditionDto.getValue());
+                criteria = Criteria.where(conditionDto.getFirstField()).is(conditionDto.getFirstValue());
                 break;
             case "<>":
-                criteria = Criteria.where(conditionDto.getField()).ne(conditionDto.getValue());
+                criteria = Criteria.where(conditionDto.getFirstField()).ne(conditionDto.getFirstValue());
                 break;
             case ">":
-                criteria = Criteria.where(conditionDto.getField()).gt(conditionDto.getValue());
+                criteria = Criteria.where(conditionDto.getFirstField()).gt(conditionDto.getFirstValue());
                 break;
             case ">=":
-                criteria = Criteria.where(conditionDto.getField()).gte(conditionDto.getValue());
+                criteria = Criteria.where(conditionDto.getFirstField()).gte(conditionDto.getFirstValue());
                 break;
             case "<":
-                criteria = Criteria.where(conditionDto.getField()).lt(conditionDto.getValue());
+                criteria = Criteria.where(conditionDto.getFirstField()).lt(conditionDto.getFirstValue());
                 break;
             case "<=":
-                criteria = Criteria.where(conditionDto.getField()).lte(conditionDto.getValue());
+                criteria = Criteria.where(conditionDto.getFirstField()).lte(conditionDto.getFirstValue());
+                break;
+        }
+        return criteria;
+    }
+
+    private Criteria secondPart(ConditionDto conditionDto) {
+        Criteria criteria = null;
+        switch (conditionDto.getSecondOperator()) {
+            case "=":
+                criteria = Criteria.where(conditionDto.getSecondField()).is(conditionDto.getSecondValue());
+                break;
+            case "<>":
+                criteria = Criteria.where(conditionDto.getSecondField()).ne(conditionDto.getSecondValue());
+                break;
+            case ">":
+                criteria = Criteria.where(conditionDto.getSecondField()).gt(conditionDto.getSecondValue());
+                break;
+            case ">=":
+                criteria = Criteria.where(conditionDto.getSecondField()).gte(conditionDto.getSecondValue());
+                break;
+            case "<":
+                criteria = Criteria.where(conditionDto.getSecondField()).lt(conditionDto.getSecondValue());
+                break;
+            case "<=":
+                criteria = Criteria.where(conditionDto.getSecondField()).lte(conditionDto.getSecondValue());
                 break;
         }
         return criteria;
