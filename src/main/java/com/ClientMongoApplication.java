@@ -34,7 +34,7 @@ public class ClientMongoApplication implements CommandLineRunner {
         String exampleSql = "SELECT * " +
                 "FROM entity " +
                 "WHERE entity.name = `lol` " +
-                "GROUP BY entity.name " +
+                "GROUP BY entity.name, entity.sex, entity.object " +
                 "ORDER BY category.name ASC " +
                 "LIMIT 3 " +
                 "OFFSET 0";
