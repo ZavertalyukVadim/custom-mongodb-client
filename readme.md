@@ -10,4 +10,6 @@ using the Aggregation class from the org.springframework.data.mongodb.core libra
 3. Download the project from the repository
 4. Go to the root of the project using the terminal and run the command "java -jar client-0.0.1-SNAPSHOT.jar"
 
-Example for input:SELECT * FROM entity WHERE name = 'lol' GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0
+Example for input:
+
+SELECT * FROM entity WHERE name = 'lol' GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0
