@@ -74,54 +74,27 @@ public class EntityService {
     }
 
     private GroupByDto getInformationForGroupByForEntity(GroupByDto groupByDto) {
-//        GroupByDto groupByDto = new GroupByDto();
-//        groupByDto.setFirstFiled("sex");
-//        groupByDto.setSecondField("name");
-//        groupByDto.setThirdField("object");
         return groupByDto;
     }
 
     private SortDto getInformationForOrderForEntity(SortDto sortDto) {
-//        SortDto sortDto = new SortDto();
-//        sortDto.setOrderByType(Sort.Direction.DESC);
-//        sortDto.setOrderByFields("name");
         return sortDto;
     }
 
     private ConditionDto getInformationConditionForEntity(ConditionDto conditionDto) {
-//        ConditionDto conditionDto = new ConditionDto();
-//        conditionDto.setFirstField("name");
-//        conditionDto.setFirstOperator("=");
-//        conditionDto.setFirstValue("lol");
-//        conditionDto.setExtended(true);
-//        conditionDto.setStandardLogicalOperation("OR");
-//        conditionDto.setSecondField("sex");
-//        conditionDto.setSecondOperator("<>");
-//        conditionDto.setSecondValue("M");
         return conditionDto;
     }
 
 
     private GroupByDto getInformationForGroupByForObject(GroupByDto groupByDto) {
-//        GroupByDto groupByDto = new GroupByDto();
-//        groupByDto.setFirstFiled("firstName");
-//        groupByDto.setSecondField("lastName");
         return groupByDto;
     }
 
     private SortDto getInformationForOrderForObject(SortDto sortDto) {
-//        SortDto sortDto = new SortDto();
-//        sortDto.setOrderByType(Sort.Direction.DESC);
-//        sortDto.setOrderByFields("firstName");
         return sortDto;
     }
 
     private ConditionDto getInformationConditionForObject(ConditionDto conditionDto) {
-//        ConditionDto conditionDto = new ConditionDto();
-//        conditionDto.setFirstField("firstName");
-//        conditionDto.setFirstOperator("=");
-//        conditionDto.setFirstValue("first");
-//        conditionDto.setExtended(false);
         return conditionDto;
     }
 
