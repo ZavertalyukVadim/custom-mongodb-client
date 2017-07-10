@@ -49,22 +49,22 @@ public class ClientMongoApplication implements CommandLineRunner {
             }
             switch (sqlDto.getProjections()) {
                 case "*":
-                    entityService.getAllFieldsFromEntity(sqlDto);
+                    System.out.println(entityService.getAllFieldsFromEntity(sqlDto));
                     break;
                 case "sex":
-                    entityService.getFieldSex(sqlDto);
+                    System.out.println(entityService.getFieldSex(sqlDto));
                     break;
                 case "name":
-                    entityService.getFieldName(sqlDto);
+                    System.out.println(entityService.getFieldName(sqlDto));
                     break;
                 case "entity.*":
-                    entityService.getAllFieldsFromSubField(sqlDto);
+                    System.out.println(entityService.getAllFieldsFromSubField(sqlDto));
                     break;
                 case "object.firstName":
-                    entityService.getSubFieldFirstName(sqlDto);
+                    System.out.println(entityService.getSubFieldFirstName(sqlDto));
                     break;
                 case "object.lastName":
-                    entityService.getSubFieldLastName(sqlDto);
+                    System.out.println(entityService.getSubFieldLastName(sqlDto));
                     break;
                 case "exit":
                     return;
