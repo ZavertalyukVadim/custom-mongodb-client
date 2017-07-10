@@ -41,7 +41,12 @@ public class ClientMongoApplication implements CommandLineRunner {
             if (Objects.equals(query, "exit"))
                 return;
             Parser parser = new Parser();
-            SqlDto sqlDto = parser.parse(query);
+            SqlDto sqlDto=null;
+            try{
+                sqlDto= parser.parse(query);}
+            catch (Exception e){
+                break;
+            }
             switch (sqlDto.getProjections()) {
                 case "*":
                     entityService.getAllFieldsFromEntity(sqlDto);
