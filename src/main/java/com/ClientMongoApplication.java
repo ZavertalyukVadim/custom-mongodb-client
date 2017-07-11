@@ -45,7 +45,8 @@ public class ClientMongoApplication implements CommandLineRunner {
             try{
                 sqlDto= parser.parse(query);}
             catch (Exception e){
-                break;
+                System.out.println("Write correct query");
+                continue;
             }
             switch (sqlDto.getProjections()) {
                 case "*":
