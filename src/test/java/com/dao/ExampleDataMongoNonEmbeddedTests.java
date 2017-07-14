@@ -1,6 +1,5 @@
-package com;
+package com.dao;
 
-import com.dao.EntityDao;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +13,11 @@ import static org.hamcrest.Matchers.is;
 @RunWith(SpringRunner.class)
 @DataMongoTest(excludeAutoConfiguration = EmbeddedMongoAutoConfiguration.class)
 public class ExampleDataMongoNonEmbeddedTests {
- @Autowired
+    @Autowired
     private EntityDao entityDao;
 
     @Test
     public void testExample() throws Exception {
-
-        assertThat(null,is(entityDao.findAll()));
+        assertThat(null, is(entityDao.findAll()));
     }
 }
