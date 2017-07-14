@@ -23,7 +23,12 @@ public class EntityService {
         this.entityTestDao = entityTestDao;
         this.objectDao = objectDao;
     }
-
+    public boolean checkEmptyDb(){
+        return entityDao.findAll().isEmpty();
+    }
+    public void addTestData(){
+        test();
+    }
     public List<EntityDto> getAllFieldsFromEntity(SqlDto query) {
 
         if (entityDao.findAll().isEmpty()) {
