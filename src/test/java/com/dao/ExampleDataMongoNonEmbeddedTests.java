@@ -1,6 +1,7 @@
 package com.dao;
 
 import com.entity.Entity;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,8 +23,8 @@ public class ExampleDataMongoNonEmbeddedTests {
 
     private Entity dog, cat, bird, human, bear;
     private String id;
-    private void cleanDb(){
 
+    private void cleanDb() {
         repository.deleteAll();
     }
 
@@ -190,6 +191,10 @@ public class ExampleDataMongoNonEmbeddedTests {
 
         List<Entity> result = repository.findByNameNotLike("%ee1%");
         Assert.assertThat(result.size(), is(5));
+    }
+
+    @After
+    public void cleanAllDb() {
         cleanDb();
     }
 }
