@@ -90,12 +90,12 @@ public class ExampleDataMongoNonEmbeddedTests {
         Assert.assertThat(dog.getName(), is(foundCategory.getName()));
     }
 
-    @Test
-    public void testSavingEmptyCollectionIsNoOp() throws Exception {
-        List<Entity> result = repository.save(new ArrayList<>());
-        Assert.assertThat(result, is(notNullValue()));
-        Assert.assertThat(result.isEmpty(), is(true));
-    }
+//    @Test
+//    public void testSavingEmptyCollectionIsNoOp() throws Exception {
+//        List<Entity> result = repository.save(new ArrayList<>());
+//        Assert.assertThat(result, is(notNullValue()));
+//        Assert.assertThat(result.isEmpty(), is(true));
+//    }
 
     @Test
     public void testUpdate() throws Exception {
