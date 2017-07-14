@@ -22,9 +22,12 @@ public class ExampleDataMongoNonEmbeddedTests {
 
     private Entity dog, cat, bird, human, bear;
     private String id;
+    private void cleanDb(){
+
+        repository.deleteAll();
+    }
 
     private void flushCategories() {
-        repository.deleteAll();
         dog = new Entity();
         dog.setName("dog");
         cat = new Entity();
@@ -67,10 +70,11 @@ public class ExampleDataMongoNonEmbeddedTests {
 
     @Test
     public void createTest() throws Exception {
+        cleanDb();
         flushCategories();
         final List<Entity> allCategories = this.repository.findAll();
         Long count = allCategories.stream().count();
-
+        cleanDb();
         flushCategories();
 
         Assert.assertThat(this.repository.count(), is(count));
@@ -78,6 +82,7 @@ public class ExampleDataMongoNonEmbeddedTests {
 
     @Test
     public void testRead() throws Exception {
+        cleanDb();
         flushCategories();
 
         Entity foundCategory = repository.findOne(id);
@@ -93,6 +98,7 @@ public class ExampleDataMongoNonEmbeddedTests {
 
     @Test
     public void testUpdate() throws Exception {
+        cleanDb();
         flushCategories();
 
         Entity foundCategory = repository.findOne(id);
@@ -104,6 +110,7 @@ public class ExampleDataMongoNonEmbeddedTests {
 
     @Test
     public void testDelete() throws Exception {
+        cleanDb();
         flushCategories();
 
         repository.delete(dog);
@@ -113,6 +120,7 @@ public class ExampleDataMongoNonEmbeddedTests {
 
     @Test
     public void testDeleteTagById() throws Exception {
+        cleanDb();
         flushCategories();
 
         repository.delete(dog.getId());
@@ -122,6 +130,7 @@ public class ExampleDataMongoNonEmbeddedTests {
 
     @Test
     public void testDeleteAll() throws Exception {
+        cleanDb();
         flushCategories();
 
         repository.deleteAll();
@@ -154,6 +163,7 @@ public class ExampleDataMongoNonEmbeddedTests {
 
     @Test
     public void testFindByNameNotFound() throws Exception {
+        cleanDb();
         flushCategories();
 
         List<Entity> byName = repository.findByName("sun");
@@ -175,9 +185,11 @@ public class ExampleDataMongoNonEmbeddedTests {
 
     @Test
     public void testExecutesNotLikeCorrectly() throws Exception {
+        cleanDb();
         flushCategories();
 
         List<Entity> result = repository.findByNameNotLike("%ee1%");
         Assert.assertThat(result.size(), is(5));
+        cleanDb();
     }
 }
