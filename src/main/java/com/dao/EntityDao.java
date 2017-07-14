@@ -11,4 +11,8 @@ public interface EntityDao extends MongoRepository<Entity, String> {
 
 
     void removeAllByNameLike(String name);
+
+    List<Entity> findByName(String name);
+
+    List<Entity> findByNameNotLike(String name);
 }
