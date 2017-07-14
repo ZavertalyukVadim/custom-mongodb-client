@@ -7,14 +7,12 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.data.domain.Sort;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
-import static org.springframework.data.domain.Sort.Direction.ASC;
 
 @RunWith(SpringRunner.class)
 @DataMongoTest(excludeAutoConfiguration = EmbeddedMongoAutoConfiguration.class)
@@ -130,29 +128,29 @@ public class ExampleDataMongoNonEmbeddedTests {
         Assert.assertThat(repository.count(), is(0L));
     }
 
-    @Test
-    public void testReturnsAllSortedCorrectly() throws Exception {
-        flushCategories();
+//    @Test
+//    public void testReturnsAllSortedCorrectly() throws Exception {
+//        flushCategories();
+//
+//        List<Entity> result = repository.findAll(new Sort(ASC, "name"));
+//        Assert.assertThat(result, is(notNullValue()));
+//        Assert.assertThat(result.size(), is(5));
+//        Assert.assertThat(result.get(0), is(bear));
+//        Assert.assertThat(result.get(1), is(human));
+//        Assert.assertThat(result.get(2), is(dog));
+//        Assert.assertThat(result.get(3), is(bird));
+//        Assert.assertThat(result.get(4), is(cat));
+//    }
 
-        List<Entity> result = repository.findAll(new Sort(ASC, "name"));
-        Assert.assertThat(result, is(notNullValue()));
-        Assert.assertThat(result.size(), is(5));
-        Assert.assertThat(result.get(0), is(bear));
-        Assert.assertThat(result.get(1), is(human));
-        Assert.assertThat(result.get(2), is(dog));
-        Assert.assertThat(result.get(3), is(bird));
-        Assert.assertThat(result.get(4), is(cat));
-    }
-
-    @Test
-    public void testFindByName() throws Exception {
-        flushCategories();
-
-        List<Entity> byName = repository.findByName("cat");
-
-        Assert.assertThat(byName.size(), is(1));
-        Assert.assertThat(byName.get(0), is(cat));
-    }
+//    @Test
+//    public void testFindByName() throws Exception {
+//        flushCategories();
+//
+//        List<Entity> byName = repository.findByName("cat");
+//
+//        Assert.assertThat(byName.size(), is(1));
+//        Assert.assertThat(byName.get(0), is(cat));
+//    }
 
     @Test
     public void testFindByNameNotFound() throws Exception {
