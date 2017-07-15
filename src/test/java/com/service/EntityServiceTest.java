@@ -330,14 +330,15 @@ public class EntityServiceTest {
         Assert.assertThat(entity, is(entityService.getAllFieldsFromEntity(query)));
 
     }
+
     @Test
-    public void testFindForAllForConditionWithEquallyAndConditionWithEqual() {
+    public void testFindForAllForConditionWithEquallyOrConditionWithEqual() {
         if (entityService.checkEmptyDb()) {
             entityService.addTestData();
         }
         SqlDto query;
         Parser parser = new Parser();
-        String exampleSql = "SELECT * FROM entity WHERE name = `lol` AND sex = `M` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
+        String exampleSql = "SELECT * FROM entity WHERE name = `lol` OR sex = `M` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
         List<EntityDto> entity = new ArrayList<>();
         EntityDto entityDto = new EntityDto();
         entityDto.setName("lol");
@@ -352,13 +353,13 @@ public class EntityServiceTest {
     }
 
     @Test
-    public void testFindForAllForConditionWithMoreOrEqualAndConditionWithEqual() {
+    public void testFindForAllForConditionWithEquallyOrConditionWithNotEqual() {
         if (entityService.checkEmptyDb()) {
             entityService.addTestData();
         }
         SqlDto query;
         Parser parser = new Parser();
-        String exampleSql = "SELECT * FROM entity WHERE name >= `lol` AND sex = `M` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
+        String exampleSql = "SELECT * FROM entity WHERE name >= `lol` OR sex = `M` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
         List<EntityDto> entity = new ArrayList<>();
         EntityDto entityDto = new EntityDto();
         entityDto.setName("lol");
@@ -383,7 +384,7 @@ public class EntityServiceTest {
         }
         SqlDto query;
         Parser parser = new Parser();
-        String exampleSql = "SELECT * FROM entity WHERE name <= `lol` AND sex = `M` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
+        String exampleSql = "SELECT * FROM entity WHERE name <= `lol` OR sex = `M` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
         List<EntityDto> entity = new ArrayList<>();
         EntityDto entityDto = new EntityDto();
         entityDto.setName("lol");
@@ -398,13 +399,13 @@ public class EntityServiceTest {
     }
 
     @Test
-    public void testFindForAllForConditionWithNotEqualAndConditionWithEqual() {
+    public void testFindForAllForConditionWithNotEqualOrConditionWithEqual() {
         if (entityService.checkEmptyDb()) {
             entityService.addTestData();
         }
         SqlDto query;
         Parser parser = new Parser();
-        String exampleSql = "SELECT * FROM entity WHERE name <> `lol` AND sex = `M` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
+        String exampleSql = "SELECT * FROM entity WHERE name <> `lol` OR sex = `M` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
         List<EntityDto> entity = new ArrayList<>();
         EntityDto entityDto2 = new EntityDto();
         entityDto2.setName("lol2");
@@ -418,13 +419,13 @@ public class EntityServiceTest {
     }
 
     @Test
-    public void testFindForAllForConditionWithMoreAndConditionWithEqual() {
+    public void testFindForAllForConditionWithMoreOrConditionWithEqual() {
         if (entityService.checkEmptyDb()) {
             entityService.addTestData();
         }
         SqlDto query;
         Parser parser = new Parser();
-        String exampleSql = "SELECT * FROM entity WHERE name > `lol` AND sex = `M` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
+        String exampleSql = "SELECT * FROM entity WHERE name > `lol` OR sex = `M` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
         List<EntityDto> entity = new ArrayList<>();
         EntityDto entityDto = new EntityDto();
         entityDto.setName("lol2");
@@ -444,7 +445,7 @@ public class EntityServiceTest {
         }
         SqlDto query;
         Parser parser = new Parser();
-        String exampleSql = "SELECT * FROM entity WHERE name < `lol` AND sex = `M` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
+        String exampleSql = "SELECT * FROM entity WHERE name < `lol` OR sex = `M` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
         List<EntityDto> entity = new ArrayList<>();
 
         query = parser.parse(exampleSql);
