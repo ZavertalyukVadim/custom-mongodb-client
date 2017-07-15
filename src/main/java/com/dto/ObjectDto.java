@@ -28,4 +28,20 @@ public class ObjectDto {
                 ", lastName='" + lastName + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        ObjectDto objectDto = (ObjectDto) o;
+        if (this.getFirstName() == o) return true;
+        return (getFirstName() != null ? getFirstName().equals(objectDto.getFirstName()) : objectDto.getFirstName() == null) && (getLastName() != null ? getLastName().equals(objectDto.getLastName()) : objectDto.getLastName() == null);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getFirstName() != null ? getFirstName().hashCode() : 0;
+        result = 31 * result + (getLastName() != null ? getLastName().hashCode() : 0);
+        return result;
+    }
 }
