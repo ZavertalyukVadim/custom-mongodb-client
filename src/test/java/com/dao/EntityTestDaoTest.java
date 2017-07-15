@@ -35,19 +35,24 @@ public class EntityTestDaoTest {
     }
 
     @Test
-    public void testFindForAll(){
+    public void testFindForAll() {
         if (entityService.checkEmptyDb()) {
             entityService.addTestData();
         }
         SqlDto query;
-        Parser parser =  new Parser();
+        Parser parser = new Parser();
         String exampleSql = "SELECT * FROM entity WHERE name = `lol` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
         List<EntityDto> entity = new ArrayList<>();
-        EntityDto entityDto= new EntityDto();
+        EntityDto entityDto = new EntityDto();
         entityDto.setName("lol");
         entityDto.setSex("M");
         entityDto.setObject(objectDao.getByLastName("last"));
         entity.add(entityDto);
+        EntityDto entityDto2 = new EntityDto();
+        entityDto2.setName("lol");
+        entityDto2.setSex("W");
+        entityDto2.setObject(objectDao.getByLastName("last"));
+        entity.add(entityDto2);
 
         query = parser.parse(exampleSql);
 
@@ -56,12 +61,138 @@ public class EntityTestDaoTest {
     }
 
     @Test
-    public void testFindForAllNotFound(){
+    public void testFindForAllForCondition() {
         if (entityService.checkEmptyDb()) {
             entityService.addTestData();
         }
         SqlDto query;
-        Parser parser =  new Parser();
+        Parser parser = new Parser();
+        String exampleSql = "SELECT * FROM entity WHERE name = `lo1` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
+        List<EntityDto> entity = new ArrayList<>();
+
+        query = parser.parse(exampleSql);
+
+        Assert.assertThat(entity, is(entityTestDao.findForAll(query.getConditionDto(), query.getGroupByDto(), query.getSortDto(), query.getSkip(), query.getLimit())));
+
+    }
+
+    @Test
+    public void testFindForAllForOrderAsk() {
+        if (entityService.checkEmptyDb()) {
+            entityService.addTestData();
+        }
+        SqlDto query;
+        Parser parser = new Parser();
+        String exampleSql = "SELECT * FROM entity WHERE name = `lol` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
+        List<EntityDto> list = new ArrayList<>();
+        EntityDto entityDto = new EntityDto();
+        entityDto.setName("lol");
+        entityDto.setSex("M");
+        entityDto.setObject(objectDao.getByLastName("last"));
+        list.add(entityDto);
+        EntityDto entityDto2 = new EntityDto();
+        entityDto2.setName("lol");
+        entityDto2.setSex("W");
+        entityDto2.setObject(objectDao.getByLastName("last"));
+        list.add(entityDto2);
+
+        query = parser.parse(exampleSql);
+
+        Assert.assertThat(list.get(0), is(entityTestDao.findForAll(query.getConditionDto(), query.getGroupByDto(), query.getSortDto(), query.getSkip(), query.getLimit()).get(0)));
+
+    }
+
+    @Test
+    public void testFindForAllForOrderDesk() {
+        if (entityService.checkEmptyDb()) {
+            entityService.addTestData();
+        }
+        SqlDto query;
+        Parser parser = new Parser();
+        String exampleSql = "SELECT * FROM entity WHERE name = `lol` GROUP BY name, sex, object ORDER BY name DESC LIMIT 3 OFFSET 0";
+        List<EntityDto> list = new ArrayList<>();
+        EntityDto entityDto2 = new EntityDto();
+        entityDto2.setName("lol");
+        entityDto2.setSex("W");
+        entityDto2.setObject(objectDao.getByLastName("last"));
+        list.add(entityDto2);
+        EntityDto entityDto = new EntityDto();
+        entityDto.setName("lol");
+        entityDto.setSex("M");
+        entityDto.setObject(objectDao.getByLastName("last"));
+        list.add(entityDto);
+
+        query = parser.parse(exampleSql);
+
+        Assert.assertThat(list.get(0), is(entityTestDao.findForAll(query.getConditionDto(), query.getGroupByDto(), query.getSortDto(), query.getSkip(), query.getLimit()).get(0)));
+
+    }
+
+    @Test
+    public void testFindForAllForSkip() {
+        if (entityService.checkEmptyDb()) {
+            entityService.addTestData();
+        }
+        SqlDto query;
+        Parser parser = new Parser();
+        String exampleSql = "SELECT * FROM entity WHERE name = `lol` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 1";
+        List<EntityDto> list = new ArrayList<>();
+        EntityDto entityDto2 = new EntityDto();
+        entityDto2.setName("lol");
+        entityDto2.setSex("W");
+        entityDto2.setObject(objectDao.getByLastName("last"));
+        list.add(entityDto2);
+
+        query = parser.parse(exampleSql);
+
+        Assert.assertThat(list, is(entityTestDao.findForAll(query.getConditionDto(), query.getGroupByDto(), query.getSortDto(), query.getSkip(), query.getLimit())));
+
+    }
+
+    @Test
+    public void testFindForAllForSkipAll() {
+        if (entityService.checkEmptyDb()) {
+            entityService.addTestData();
+        }
+        SqlDto query;
+        Parser parser = new Parser();
+        String exampleSql = "SELECT * FROM entity WHERE name = `lol` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 2";
+        List<EntityDto> list = new ArrayList<>();
+
+        query = parser.parse(exampleSql);
+
+        Assert.assertThat(list, is(entityTestDao.findForAll(query.getConditionDto(), query.getGroupByDto(), query.getSortDto(), query.getSkip(), query.getLimit())));
+
+    }
+
+    @Test
+    public void testFindForAllForLimit() {
+        if (entityService.checkEmptyDb()) {
+            entityService.addTestData();
+        }
+        SqlDto query;
+        Parser parser = new Parser();
+        String exampleSql = "SELECT * FROM entity WHERE name = `lol` GROUP BY name, sex, object ORDER BY name ASC LIMIT 1 OFFSET 0";
+        List<EntityDto> list = new ArrayList<>();
+        EntityDto entityDto2 = new EntityDto();
+        entityDto2.setName("lol");
+        entityDto2.setSex("W");
+        entityDto2.setObject(objectDao.getByLastName("last"));
+        list.add(entityDto2);
+
+        query = parser.parse(exampleSql);
+
+        Assert.assertThat(list, is(entityTestDao.findForAll(query.getConditionDto(), query.getGroupByDto(), query.getSortDto(), query.getSkip(), query.getLimit())));
+
+    }
+
+    @Test
+    public void testFindForAllNotFound() {
+        if (entityService.checkEmptyDb()) {
+            entityService.addTestData();
+        }
+        SqlDto query;
+        Parser parser = new Parser();
         String exampleSql = "SELECT * FROM entity WHERE name = `khe` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
         List<EntityDto> entity = new ArrayList<>();
 
@@ -70,16 +201,20 @@ public class EntityTestDaoTest {
         Assert.assertThat(entity, is(entityTestDao.findForAll(query.getConditionDto(), query.getGroupByDto(), query.getSortDto(), query.getSkip(), query.getLimit())));
 
     }
+
     @Test
-    public void testFindForFieldSex(){
+    public void testFindForFieldSex() {
         if (entityService.checkEmptyDb()) {
             entityService.addTestData();
         }
         SqlDto query;
-        Parser parser =  new Parser();
+        Parser parser = new Parser();
         String exampleSql = "SELECT sex FROM entity WHERE name = `lol` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
         List<SexDto> entity = new ArrayList<>();
-        SexDto entityDto= new SexDto();
+        SexDto entityDto2 = new SexDto();
+        entityDto2.setSex("W");
+        entity.add(entityDto2);
+        SexDto entityDto = new SexDto();
         entityDto.setSex("M");
         entity.add(entityDto);
 
@@ -90,12 +225,12 @@ public class EntityTestDaoTest {
     }
 
     @Test
-    public void testFindForFieldSexNotFound(){
+    public void testFindForFieldSexNotFound() {
         if (entityService.checkEmptyDb()) {
             entityService.addTestData();
         }
         SqlDto query;
-        Parser parser =  new Parser();
+        Parser parser = new Parser();
         String exampleSql = "SELECT sex FROM entity WHERE name = `khe` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
         List<SexDto> entity = new ArrayList<>();
 
@@ -106,17 +241,20 @@ public class EntityTestDaoTest {
     }
 
     @Test
-    public void testFindForFieldName(){
+    public void testFindForFieldName() {
         if (entityService.checkEmptyDb()) {
             entityService.addTestData();
         }
         SqlDto query;
-        Parser parser =  new Parser();
+        Parser parser = new Parser();
         String exampleSql = "SELECT name FROM entity WHERE name = `lol` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
         List<NameDto> entity = new ArrayList<>();
-        NameDto nameDto= new NameDto();
+        NameDto nameDto = new NameDto();
         nameDto.setName("lol");
         entity.add(nameDto);
+        NameDto nameDto1 = new NameDto();
+        nameDto1.setName("lol");
+        entity.add(nameDto1);
 
         query = parser.parse(exampleSql);
 
@@ -125,12 +263,12 @@ public class EntityTestDaoTest {
     }
 
     @Test
-    public void testFindForFieldNameNotFound(){
+    public void testFindForFieldNameNotFound() {
         if (entityService.checkEmptyDb()) {
             entityService.addTestData();
         }
         SqlDto query;
-        Parser parser =  new Parser();
+        Parser parser = new Parser();
         String exampleSql = "SELECT name FROM entity WHERE name = `khe` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
         List<NameDto> entity = new ArrayList<>();
 
@@ -141,15 +279,15 @@ public class EntityTestDaoTest {
     }
 
     @Test
-    public void testFindFieldOnSubField(){
+    public void testFindFieldOnSubField() {
         if (entityService.checkEmptyDb()) {
             entityService.addTestData();
         }
         SqlDto query;
-        Parser parser =  new Parser();
+        Parser parser = new Parser();
         String exampleSql = "SELECT entity.* FROM entity WHERE firstName = `first` GROUP BY firstName, lastName ORDER BY firstName ASC LIMIT 3 OFFSET 0";
         List<ObjectDto> entity = new ArrayList<>();
-        ObjectDto objectDto= new ObjectDto();
+        ObjectDto objectDto = new ObjectDto();
         objectDto.setFirstName("first");
         objectDto.setLastName("last");
         entity.add(objectDto);
@@ -161,12 +299,12 @@ public class EntityTestDaoTest {
     }
 
     @Test
-    public void testFindFieldOnSubFieldNotFound(){
+    public void testFindFieldOnSubFieldNotFound() {
         if (entityService.checkEmptyDb()) {
             entityService.addTestData();
         }
         SqlDto query;
-        Parser parser =  new Parser();
+        Parser parser = new Parser();
         String exampleSql = "SELECT entity.* FROM entity WHERE firstName = `khe` GROUP BY firstName, lastName ORDER BY firstName ASC LIMIT 3 OFFSET 0";
         List<ObjectDto> entity = new ArrayList<>();
 
@@ -177,15 +315,15 @@ public class EntityTestDaoTest {
     }
 
     @Test
-    public void testFindSubFieldLastName(){
+    public void testFindSubFieldLastName() {
         if (entityService.checkEmptyDb()) {
             entityService.addTestData();
         }
         SqlDto query;
-        Parser parser =  new Parser();
+        Parser parser = new Parser();
         String exampleSql = "SELECT object.lastName FROM entity WHERE firstName = `first` GROUP BY firstName, lastName ORDER BY firstName ASC LIMIT 3 OFFSET 0";
         List<LastNameDto> entity = new ArrayList<>();
-        LastNameDto lastNameDto= new LastNameDto();
+        LastNameDto lastNameDto = new LastNameDto();
         lastNameDto.setLastName("last");
         entity.add(lastNameDto);
 
@@ -196,12 +334,12 @@ public class EntityTestDaoTest {
     }
 
     @Test
-    public void testFindSubFieldLastNameNotFound(){
+    public void testFindSubFieldLastNameNotFound() {
         if (entityService.checkEmptyDb()) {
             entityService.addTestData();
         }
         SqlDto query;
-        Parser parser =  new Parser();
+        Parser parser = new Parser();
         String exampleSql = "SELECT object.lastName FROM entity WHERE firstName = `khe` GROUP BY firstName, lastName ORDER BY firstName ASC LIMIT 3 OFFSET 0";
         List<LastNameDto> entity = new ArrayList<>();
 
@@ -212,15 +350,15 @@ public class EntityTestDaoTest {
     }
 
     @Test
-    public void testFindSubFieldFirstName(){
+    public void testFindSubFieldFirstName() {
         if (entityService.checkEmptyDb()) {
             entityService.addTestData();
         }
         SqlDto query;
-        Parser parser =  new Parser();
+        Parser parser = new Parser();
         String exampleSql = "SELECT object.firstName FROM entity WHERE firstName = `first` GROUP BY firstName, lastName ORDER BY firstName ASC LIMIT 3 OFFSET 0";
         List<FirstNameDto> entity = new ArrayList<>();
-        FirstNameDto firstNameDto= new FirstNameDto();
+        FirstNameDto firstNameDto = new FirstNameDto();
         firstNameDto.setFirstName("first");
         entity.add(firstNameDto);
 
@@ -231,12 +369,12 @@ public class EntityTestDaoTest {
     }
 
     @Test
-    public void testFindSubFieldFirstNameNotFound(){
+    public void testFindSubFieldFirstNameNotFound() {
         if (entityService.checkEmptyDb()) {
             entityService.addTestData();
         }
         SqlDto query;
-        Parser parser =  new Parser();
+        Parser parser = new Parser();
         String exampleSql = "SELECT object.firstName FROM entity WHERE firstName = `khe` GROUP BY firstName, lastName ORDER BY firstName ASC LIMIT 3 OFFSET 0";
         List<FirstNameDto> entity = new ArrayList<>();
 

@@ -117,5 +117,10 @@ public class EntityService {
         entity3.setName("lol2");
         entity3.setSex("M");
         entityDao.save(entity3);
+        Entity entity4 = new Entity();
+        entity4.setName("lol");
+        entity4.setSex("W");
+        entity4.setObject(object);
+        entityDao.save(entity4);
     }
 }

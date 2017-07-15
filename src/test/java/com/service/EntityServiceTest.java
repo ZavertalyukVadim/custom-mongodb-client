@@ -48,6 +48,11 @@ public class EntityServiceTest {
         entityDto.setSex("M");
         entityDto.setObject(objectDao.getByLastName("last"));
         entity.add(entityDto);
+        EntityDto entityDto2 = new EntityDto();
+        entityDto2.setName("lol");
+        entityDto2.setSex("W");
+        entityDto2.setObject(objectDao.getByLastName("last"));
+        entity.add(entityDto2);
 
         query = parser.parse(exampleSql);
 
