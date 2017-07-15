@@ -187,6 +187,8 @@ public class EntityServiceTest {
 
     }
 
+
+
     @Test
     public void testFindForAllForCondition() {
         if (entityService.checkEmptyDb()) {
@@ -328,6 +330,128 @@ public class EntityServiceTest {
         Assert.assertThat(entity, is(entityService.getAllFieldsFromEntity(query)));
 
     }
+    @Test
+    public void testFindForAllForConditionWithEquallyAndConditionWithEqual() {
+        if (entityService.checkEmptyDb()) {
+            entityService.addTestData();
+        }
+        SqlDto query;
+        Parser parser = new Parser();
+        String exampleSql = "SELECT * FROM entity WHERE name = `lol` AND sex = `M` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
+        List<EntityDto> entity = new ArrayList<>();
+        EntityDto entityDto = new EntityDto();
+        entityDto.setName("lol");
+        entityDto.setSex("M");
+        entityDto.setObject(objectDao.getByLastName("last"));
+        entity.add(entityDto);
+
+        query = parser.parse(exampleSql);
+
+        Assert.assertThat(entity, is(entityService.getAllFieldsFromEntity(query)));
+
+    }
+
+    @Test
+    public void testFindForAllForConditionWithMoreOrEqualAndConditionWithEqual() {
+        if (entityService.checkEmptyDb()) {
+            entityService.addTestData();
+        }
+        SqlDto query;
+        Parser parser = new Parser();
+        String exampleSql = "SELECT * FROM entity WHERE name >= `lol` AND sex = `M` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
+        List<EntityDto> entity = new ArrayList<>();
+        EntityDto entityDto = new EntityDto();
+        entityDto.setName("lol");
+        entityDto.setSex("M");
+        entityDto.setObject(objectDao.getByLastName("last"));
+        entity.add(entityDto);
+        EntityDto entityDto1 = new EntityDto();
+        entityDto1.setName("lol2");
+        entityDto1.setSex("M");
+        entity.add(entityDto1);
+
+        query = parser.parse(exampleSql);
+
+        Assert.assertThat(entity, is(entityService.getAllFieldsFromEntity(query)));
+
+    }
+
+    @Test
+    public void testFindForAllForConditionWithLessOrEqualAndConditionWithEqual() {
+        if (entityService.checkEmptyDb()) {
+            entityService.addTestData();
+        }
+        SqlDto query;
+        Parser parser = new Parser();
+        String exampleSql = "SELECT * FROM entity WHERE name <= `lol` AND sex = `M` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
+        List<EntityDto> entity = new ArrayList<>();
+        EntityDto entityDto = new EntityDto();
+        entityDto.setName("lol");
+        entityDto.setSex("M");
+        entityDto.setObject(objectDao.getByLastName("last"));
+        entity.add(entityDto);
+
+        query = parser.parse(exampleSql);
+
+        Assert.assertThat(entity, is(entityService.getAllFieldsFromEntity(query)));
+
+    }
+
+    @Test
+    public void testFindForAllForConditionWithNotEqualAndConditionWithEqual() {
+        if (entityService.checkEmptyDb()) {
+            entityService.addTestData();
+        }
+        SqlDto query;
+        Parser parser = new Parser();
+        String exampleSql = "SELECT * FROM entity WHERE name <> `lol` AND sex = `M` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
+        List<EntityDto> entity = new ArrayList<>();
+        EntityDto entityDto2 = new EntityDto();
+        entityDto2.setName("lol2");
+        entityDto2.setSex("M");
+        entity.add(entityDto2);
+
+        query = parser.parse(exampleSql);
+
+        Assert.assertThat(entity, is(entityService.getAllFieldsFromEntity(query)));
+
+    }
+
+    @Test
+    public void testFindForAllForConditionWithMoreAndConditionWithEqual() {
+        if (entityService.checkEmptyDb()) {
+            entityService.addTestData();
+        }
+        SqlDto query;
+        Parser parser = new Parser();
+        String exampleSql = "SELECT * FROM entity WHERE name > `lol` AND sex = `M` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
+        List<EntityDto> entity = new ArrayList<>();
+        EntityDto entityDto = new EntityDto();
+        entityDto.setName("lol2");
+        entityDto.setSex("M");
+        entity.add(entityDto);
+
+        query = parser.parse(exampleSql);
+
+        Assert.assertThat(entity, is(entityService.getAllFieldsFromEntity(query)));
+
+    }
+
+    @Test
+    public void testFindForAllForConditionWithLessAndConditionWithEqual() {
+        if (entityService.checkEmptyDb()) {
+            entityService.addTestData();
+        }
+        SqlDto query;
+        Parser parser = new Parser();
+        String exampleSql = "SELECT * FROM entity WHERE name < `lol` AND sex = `M` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
+        List<EntityDto> entity = new ArrayList<>();
+
+        query = parser.parse(exampleSql);
+
+        Assert.assertThat(entity, is(entityService.getAllFieldsFromEntity(query)));
+
+    }
 
     @Test
     public void testFindForFieldSex() {
@@ -336,11 +460,8 @@ public class EntityServiceTest {
         }
         SqlDto query;
         Parser parser = new Parser();
-        String exampleSql = "SELECT sex FROM entity WHERE name = `lol` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
+        String exampleSql = "SELECT sex FROM entity WHERE name = `lol` AND sex = `M` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
         List<SexDto> entity = new ArrayList<>();
-        SexDto entityDto2 = new SexDto();
-        entityDto2.setSex("W");
-        entity.add(entityDto2);
         SexDto entityDto = new SexDto();
         entityDto.setSex("M");
         entity.add(entityDto);
