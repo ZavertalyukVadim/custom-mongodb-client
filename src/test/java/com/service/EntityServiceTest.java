@@ -439,7 +439,7 @@ public class EntityServiceTest {
     }
 
     @Test
-    public void testFindForAllForConditionWithLessAndConditionWithEqual() {
+    public void testFindForAllForConditionWithLessOrConditionWithEqual() {
         if (entityService.checkEmptyDb()) {
             entityService.addTestData();
         }
