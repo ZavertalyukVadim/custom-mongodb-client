@@ -18,4 +18,19 @@ public class LastNameDto {
                 "lastName='" + lastName + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        LastNameDto that = (LastNameDto) o;
+
+        return getLastName() != null ? getLastName().equals(that.getLastName()) : that.getLastName() == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return getLastName() != null ? getLastName().hashCode() : 0;
+    }
 }
