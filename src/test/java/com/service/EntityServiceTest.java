@@ -7,6 +7,7 @@ import com.dto.SqlDto;
 import com.parser.Parser;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,11 @@ public class EntityServiceTest {
 
     private void cleanDb() {
         repository.deleteAll();
+    }
+
+    @Before
+    public void cleanAllDbBefore() {
+        cleanDb();
     }
 
     @Test

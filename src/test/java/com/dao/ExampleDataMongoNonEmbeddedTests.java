@@ -3,6 +3,7 @@ package com.dao;
 import com.entity.Entity;
 import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +60,11 @@ public class ExampleDataMongoNonEmbeddedTests {
         Assert.assertThat(repository.exists(bird.getId()), is(true));
         Assert.assertThat(repository.exists(human.getId()), is(true));
         Assert.assertThat(repository.exists(bear.getId()), is(true));
+    }
+
+    @Before
+    public void cleanAllDbBefore() {
+        cleanDb();
     }
 
     @Test
