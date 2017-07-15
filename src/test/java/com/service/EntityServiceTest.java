@@ -584,8 +584,11 @@ public class EntityServiceTest {
         }
         SqlDto query;
         Parser parser = new Parser();
-        String exampleSql = "SELECT sex FROM entity WHERE name = `lol` AND sex = `M` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
+        String exampleSql = "SELECT sex FROM entity WHERE name = `lol` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
         List<SexDto> entity = new ArrayList<>();
+        SexDto entityDto1 = new SexDto();
+        entityDto1.setSex("W");
+        entity.add(entityDto1);
         SexDto entityDto = new SexDto();
         entityDto.setSex("M");
         entity.add(entityDto);
