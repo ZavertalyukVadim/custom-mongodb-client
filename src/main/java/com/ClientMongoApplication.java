@@ -37,7 +37,7 @@ public class ClientMongoApplication implements CommandLineRunner {
         if (entityService.checkEmptyDb()) {
             entityService.addTestData();
         }
-        //with a cycle with test does not run
+        //with a cycle the test does not run
 //        while (true) {
 //            System.out.print("Write = ");
 //            query = bufferedReader.readLine();
