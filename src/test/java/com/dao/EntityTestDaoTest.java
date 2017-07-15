@@ -3,6 +3,8 @@ package com.dao;
 import com.dto.EntityDto;
 import com.dto.SqlDto;
 import com.parser.Parser;
+import com.service.EntityService;
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,9 +26,20 @@ public class EntityTestDaoTest {
     private EntityTestDao entityTestDao;
     @Autowired
     private ObjectDao objectDao;
+    @Autowired
+    private EntityDao repository;
+    @Autowired
+    private EntityService entityService;
+
+    private void cleanDb() {
+        repository.deleteAll();
+    }
 
     @Test
     public void testFindForAll(){
+        if (entityService.checkEmptyDb()) {
+            entityService.addTestData();
+        }
         SqlDto query;
         Parser parser =  new Parser();
         String exampleSql = "SELECT * FROM entity WHERE name = `lol` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
@@ -41,5 +54,9 @@ public class EntityTestDaoTest {
 
         Assert.assertThat(entity, is(entityTestDao.findForAll(query.getConditionDto(), query.getGroupByDto(), query.getSortDto(), query.getSkip(), query.getLimit())));
 
+    }
+    @After
+    public void cleanAllDb() {
+        cleanDb();
     }
 }
