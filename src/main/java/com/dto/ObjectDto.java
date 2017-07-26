@@ -23,7 +23,7 @@ public class ObjectDto {
 
     @Override
     public String toString() {
-        return "ObjectDto{" +
+        return "{" +
                 "firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 '}';

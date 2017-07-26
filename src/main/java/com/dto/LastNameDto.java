@@ -14,7 +14,7 @@ public class LastNameDto {
 
     @Override
     public String toString() {
-        return "LastNameDto{" +
+        return "{" +
                 "lastName='" + lastName + '\'' +
                 '}';
     }

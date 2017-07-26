@@ -35,7 +35,7 @@ public class EntityDto {
 
     @Override
     public String toString() {
-        return "EntityDto{" +
+        return "{" +
                 "name='" + name + '\'' +
                 ", sex=" + sex +
                 ", object=" + object +

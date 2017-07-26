@@ -14,7 +14,7 @@ public class SexDto {
 
     @Override
     public String toString() {
-        return "SexDto{" +
+        return "{" +
                 "sex='" + sex + '\'' +
                 '}';
     }
