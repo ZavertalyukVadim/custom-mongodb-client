@@ -38,29 +38,29 @@ public class EntityService {
 
     }
 
-    public List<SexDto> getFieldSex(SqlDto query) {
+    List<SexDto> getFieldSex(SqlDto query) {
         if (entityDao.findAll().isEmpty()) {
             test();
         }
         return entityTestDao.findForFieldSex(getInformationConditionForEntity(query.getConditionDto()), getInformationForGroupByForEntity(query.getGroupByDto()), getInformationForOrderForEntity(query.getSortDto()), getInformationForSkip(query.getSkip()), getInformationForLimit(query.getLimit()));
     }
 
-    public List<NameDto> getFieldName(SqlDto query) {
+    List<NameDto> getFieldName(SqlDto query) {
         if (entityDao.findAll().isEmpty()) {
             test();
         }
         return entityTestDao.findForFieldName(getInformationConditionForEntity(query.getConditionDto()), getInformationForGroupByForEntity(query.getGroupByDto()), getInformationForOrderForEntity(query.getSortDto()), getInformationForSkip(query.getSkip()), getInformationForLimit(query.getLimit()));
     }
 
-    public List<ObjectDto> getAllFieldsFromSubField(SqlDto query) {
+    List<ObjectDto> getAllFieldsFromSubField(SqlDto query) {
         return entityTestDao.findFieldsFromSubField(getInformationConditionForObject(query.getConditionDto()), getInformationForGroupByForObject(query.getGroupByDto()), getInformationForOrderForObject(query.getSortDto()), getInformationForSkip(query.getSkip()), getInformationForLimit(query.getLimit()));
     }
 
-    public  List<FirstNameDto> getSubFieldFirstName(SqlDto query) {
+    List<FirstNameDto> getSubFieldFirstName(SqlDto query) {
         return entityTestDao.findSubFieldFirstName(getInformationConditionForObject(query.getConditionDto()), getInformationForGroupByForObject(query.getGroupByDto()), getInformationForOrderForObject(query.getSortDto()), getInformationForSkip(query.getSkip()), getInformationForLimit(query.getLimit()));
     }
 
-    public List<LastNameDto> getSubFieldLastName(SqlDto query) {
+    List<LastNameDto> getSubFieldLastName(SqlDto query) {
         return entityTestDao.findSubFieldLastName(getInformationConditionForObject(query.getConditionDto()), getInformationForGroupByForObject(query.getGroupByDto()), getInformationForOrderForObject(query.getSortDto()), getInformationForSkip(query.getSkip()), getInformationForLimit(query.getLimit()));
 
     }
