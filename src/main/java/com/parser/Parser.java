@@ -5,9 +5,11 @@ import com.dto.GroupByDto;
 import com.dto.SortDto;
 import com.dto.SqlDto;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
+@Component
 public class Parser {
 
     public SqlDto parse(String exampleSql) {
