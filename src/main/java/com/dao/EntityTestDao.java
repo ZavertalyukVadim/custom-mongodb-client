@@ -12,6 +12,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -67,30 +68,38 @@ public class EntityTestDao {
     }
 
     private Aggregation getAggregation(ConditionDto conditionDto, GroupByDto groupBy, SortDto sortDto, Integer skip, Integer limit) {
-
+        List<AggregationOperation> list = new ArrayList<>();
         AggregationOperation match = Aggregation.match(getCriteriaForCondition(conditionDto));
-        AggregationOperation group;
+        list.add(match);
+//        try {
+//            AggregationOperation group = Aggregation.group(groupBy.getFirstFiled(), groupBy.getSecondField(), groupBy.getThirdField());
+//            list.add(group);
+//        } catch (Exception e) {
+//                AggregationOperation group = Aggregation.group(groupBy.getFirstFiled(), groupBy.getSecondField());
+//                list.add(group);
+//        }
         try {
-            group = Aggregation.group(groupBy.getFirstFiled(), groupBy.getSecondField(), groupBy.getThirdField());
-        } catch (Exception e) {
-            group = Aggregation.group(groupBy.getFirstFiled(), groupBy.getSecondField());
+            AggregationOperation sort = Aggregation.sort(sortDto.getOrderByType(), sortDto.getOrderByFields());
+            list.add(sort);
+        } catch (Exception ignored) {
         }
-        AggregationOperation sort = Aggregation.sort(sortDto.getOrderByType(), sortDto.getOrderByFields());
-        AggregationOperation lim = Aggregation.limit(limit);
-        AggregationOperation sk = Aggregation.skip(skip);
-        return Aggregation.newAggregation(
-                match,
-                group,
-                sort,
-                lim,
-                sk
-        );
+        try {
+            AggregationOperation lim = Aggregation.limit(limit);
+            list.add(lim);
+        } catch (Exception ignored) {
+        }
+        try {
+            AggregationOperation sk = Aggregation.skip(skip);
+            list.add(sk);
+        } catch (Exception ignored) {
+        }
+        return Aggregation.newAggregation(list);
     }
 
     private Criteria getCriteriaForCondition(ConditionDto conditionDto) {
         Criteria criteria = firstPart(conditionDto);
-        if (conditionDto.getExtended()){
-            switch (conditionDto.getStandardLogicalOperation()){
+        if (conditionDto.getExtended()) {
+            switch (conditionDto.getStandardLogicalOperation()) {
                 case "AND":
                     criteria.andOperator(secondPart(conditionDto));
                     break;

@@ -14,13 +14,44 @@ public class Parser {
 
     public SqlDto parse(String exampleSql) {
         SqlDto sqlDto = new SqlDto();
-        sqlDto.setProjections(parseSelect(exampleSql));
-        sqlDto.setTarget(parseTarget(exampleSql));
-        sqlDto.setSkip(parseSkip(exampleSql));
-        sqlDto.setLimit(parseLimit(exampleSql));
-        sqlDto.setConditionDto(parseCondition(exampleSql));
-        sqlDto.setGroupByDto(parseGroupBy(exampleSql));
-        sqlDto.setSortDto(parseSort(exampleSql));
+
+        try {
+            sqlDto.setProjections(parseSelect(exampleSql));
+        } catch (Exception ignored) {
+        }
+        try {
+
+            sqlDto.setTarget(parseTarget(exampleSql));
+        } catch (Exception ignored) {
+        }
+        try {
+
+            sqlDto.setSkip(parseSkip(exampleSql));
+        } catch (Exception ignored) {
+        }
+        try {
+
+            sqlDto.setLimit(parseLimit(exampleSql));
+        } catch (Exception ignored) {
+        }
+        try {
+
+            sqlDto.setConditionDto(parseCondition(exampleSql));
+        } catch (Exception ignored) {
+        }
+        try {
+
+            sqlDto.setGroupByDto(parseGroupBy(exampleSql));
+        } catch (Exception e) {
+            GroupByDto groupByDto =  new GroupByDto();
+            groupByDto.setFirstFiled(sqlDto.getConditionDto().getFirstField());
+            sqlDto.setGroupByDto(groupByDto);
+        }
+        try {
+
+            sqlDto.setSortDto(parseSort(exampleSql));
+        } catch (Exception ignored) {
+        }
         return sqlDto;
     }
 
@@ -81,7 +112,6 @@ public class Parser {
         String firstOperator = cutFirstField.substring(0, 2).trim();
         String cutFirstOperator = cutFirstField.substring(cutFirstField.indexOf(firstOperator) + firstOperator.length()).trim();
         conditionDto.setFirstOperator(firstOperator);
-
         String firstValue = cutFirstOperator.substring(1, cutFirstOperator.indexOf(" ") - 1).trim();
         String cutFirstValue = cutFirstOperator.substring(cutFirstOperator.indexOf(firstValue) + firstValue.length() + 1).trim();
         conditionDto.setFirstValue(firstValue);
