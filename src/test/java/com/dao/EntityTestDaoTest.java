@@ -218,10 +218,10 @@ public class EntityTestDaoTest {
         String exampleSql = "SELECT sex FROM entity WHERE name = `lol` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
         List<SexDto> entity = new ArrayList<>();
         SexDto entityDto2 = new SexDto();
-        entityDto2.setSex("W");
+        entityDto2.setSex("M");
         entity.add(entityDto2);
         SexDto entityDto = new SexDto();
-        entityDto.setSex("M");
+        entityDto.setSex("W");
         entity.add(entityDto);
 
         query = parser.parse(exampleSql);

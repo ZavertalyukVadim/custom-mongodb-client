@@ -804,10 +804,10 @@ public class EntityServiceTest {
         String exampleSql = "SELECT sex FROM entity WHERE name = `lol` GROUP BY name, sex, object ORDER BY name ASC LIMIT 3 OFFSET 0";
         List<SexDto> entity = new ArrayList<>();
         SexDto entityDto1 = new SexDto();
-        entityDto1.setSex("W");
+        entityDto1.setSex("M");
         entity.add(entityDto1);
         SexDto entityDto = new SexDto();
-        entityDto.setSex("M");
+        entityDto.setSex("W");
         entity.add(entityDto);
 
         query = parser.parse(exampleSql);
